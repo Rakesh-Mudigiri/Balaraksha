@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Telangana Child Welfare Platform - Connecting orphaned and abandoned children to safe shelters and support services">
+    <meta name="keywords" content="child welfare, Telangana, orphan support, shelter, DCPU, child protection">
+    <title>బాలరక్ష | Telangana Child Welfare Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+        <div class="container">
+            <span class="emergency-icon">🚨</span>
+            <span data-i18n="emergency_text">Child Emergency? Call 1098 (Childline) or 100 (Police)</span>
+            <a href="tel:1098" class="emergency-btn" data-i18n="call_now">Call Now</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">🏠</div>
+                <div class="logo-text">
+                    <span class="logo-primary" data-i18n="app_name">బాలరక్ష</span>
+                    <span class="logo-secondary" data-i18n="app_subtitle">Child Welfare Platform</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active" data-i18n="nav_home">Home</a>
+                <a href="#about" class="nav-link" data-i18n="nav_about">About</a>
+                <a href="finder.html" class="nav-link" data-i18n="nav_shelters">Shelters</a>
+                <a href="stories.html" class="nav-link">Stories</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="track.html" class="nav-link">Track Case</a>
+                <a href="donate.html" class="nav-link nav-link-donate">💝 Donate</a>
+            </nav>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langToggle">
+                        <span class="lang-icon">🌐</span>
+                        <span class="lang-current">EN</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button class="lang-option" data-lang="te">తెలుగు</button>
+                        <button class="lang-option" data-lang="hi">हिंदी</button>
+                        <button class="lang-option active" data-lang="en">English</button>
+                    </div>
+                </div>
+                <a href="login.html" class="btn btn-outline" data-i18n="btn_login">Login</a>
+                <a href="new-case.html" class="btn btn-primary" data-i18n="btn_report">Report Child</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#home" class="mobile-nav-link" data-i18n="nav_home">Home</a>
+            <a href="#about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+            <a href="finder.html" class="mobile-nav-link">🏠 Find Shelters</a>
+            <a href="stories.html" class="mobile-nav-link">💜 Success Stories</a>
+            <a href="donate.html" class="mobile-nav-link" style="color: #f59e0b;">💝 Donate</a>
+            <a href="resources.html" class="mobile-nav-link">📚 Resources</a>
+            <a href="track.html" class="mobile-nav-link">📋 Track Case</a>
+            <div class="mobile-nav-actions">
+                <a href="login.html" class="btn btn-outline btn-block" data-i18n="btn_login">Login</a>
+                <a href="new-case.html" class="btn btn-primary btn-block" data-i18n="btn_report">Report Child</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge" data-i18n="hero_badge">
+                    <span class="badge-icon">✨</span> Government of Telangana Initiative
+                </div>
+                <h1 class="hero-title">
+                    <span data-i18n="hero_title_1">Every Child Deserves</span>
+                    <span class="gradient-text" data-i18n="hero_title_2">A Safe Home</span>
+                </h1>
+                <p class="hero-description" data-i18n="hero_description">
+                    Connecting vulnerable children across Telangana's 33 districts to verified shelters,
+                    government support, and loving communities. Report, rescue, rehabilitate.
+                </p>
+                <div class="hero-actions">
+                    <a href="new-case.html" class="btn btn-primary btn-lg">
+                        <span class="btn-icon">🚨</span>
+                        <span data-i18n="btn_report_child">Report a Child in Need</span>
+                    </a>
+                    <a href="#how-it-works" class="btn btn-glass btn-lg">
+                        <span class="btn-icon">▶</span>
+                        <span data-i18n="btn_watch">See How It Works</span>
+                    </a>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-logos">
+                        <span class="trust-item">🏛️ DCPU Integrated</span>
+                        <span class="trust-item">👮 Police Connected</span>
+                        <span class="trust-item">⚖️ JJ Board Compliant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card main-card">
+                    <div class="card-header">
+                        <span class="status-dot status-live"></span>
+                        <span data-i18n="live_tracking">Live Tracking</span>
+                    </div>
+                    <div class="mini-map" id="miniMap">
+                        <div class="map-marker marker-1" title="Hyderabad">📍</div>
+                        <div class="map-marker marker-2" title="Warangal">📍</div>
+                        <div class="map-marker marker-3" title="Karimnagar">📍</div>
+                        <div class="map-pulse"></div>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="shelterCount">156</span>
+                            <span class="stat-label" data-i18n="stat_shelters">Shelters</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="bedCount">2,340</span>
+                            <span class="stat-label" data-i18n="stat_beds">Available Beds</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-card floating-card card-1">
+                    <div class="floating-icon">👶</div>
+                    <div class="floating-text">
+                        <span class="floating-number">1,247</span>
+                        <span class="floating-label" data-i18n="children_rescued">Children Rescued</span>
+                    </div>
+                </div>
+                <div class="hero-card floating-card card-2">
+                    <div class="floating-icon">👨‍👩‍👧</div>
+                    <div class="floating-text">
+                        <span class="floating-number">89%</span>
+                        <span class="floating-label" data-i18n="reunification_rate">Reunification Rate</span>
+                    </div>
+                </div>
+                <div class="hero-card floating-card card-3">
+                    <div class="floating-icon">⚡</div>
+                    <div class="floating-text">
+                        <span class="floating-number">&lt;2hrs</span>
+                        <span class="floating-label" data-i18n="response_time">Avg Response Time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span data-i18n="scroll_down">Scroll to explore</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-content">
+                        <span class="stat-number counter" data-target="156">0</span>
+                        <span class="stat-label" data-i18n="stat_verified_shelters">Verified Shelters</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👶</div>
+                    <div class="stat-content">
+                        <span class="stat-number counter" data-target="1247">0</span>
+                        <span class="stat-label" data-i18n="stat_children_helped">Children Helped</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🤝</div>
+                    <div class="stat-content">
+                        <span class="stat-number counter" data-target="892">0</span>
+                        <span class="stat-label" data-i18n="stat_volunteers">Active Volunteers</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-content">
+                        <span class="stat-number counter" data-target="33">0</span>
+                        <span class="stat-label" data-i18n="stat_districts">Districts Covered</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="about_badge">Our Mission</span>
+                <h2 class="section-title" data-i18n="about_title">
+                    Technology-Driven Child Protection
+                </h2>
+                <p class="section-description" data-i18n="about_description">
+                    We're building a comprehensive ecosystem that ensures no child in Telangana
+                    remains without proper care and support.
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">🚨</div>
+                    <h3 data-i18n="about_report_title">Instant Reporting</h3>
+                    <p data-i18n="about_report_desc">
+                        Report a child in need with photos, location, and details.
+                        Anonymous reporting available for sensitive situations.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🎯</div>
+                    <h3 data-i18n="about_match_title">Smart Matching</h3>
+                    <p data-i18n="about_match_desc">
+                        AI-powered algorithm matches children to the nearest suitable shelter
+                        based on capacity, specialization, and needs.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🏛️</div>
+                    <h3 data-i18n="about_gov_title">Government Integration</h3>
+                    <p data-i18n="about_gov_desc">
+                        Seamless integration with DCPU, Police, JJ Board, and other
+                        government departments for official case management.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">📊</div>
+                    <h3 data-i18n="about_track_title">Complete Tracking</h3>
+                    <p data-i18n="about_track_desc">
+                        End-to-end case tracking from reporting through rehabilitation,
+                        family reunification, or successful placement.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">💚</div>
+                    <h3 data-i18n="about_care_title">Holistic Care</h3>
+                    <p data-i18n="about_care_desc">
+                        Medical care, education, counseling, and skill development
+                        programs for complete child rehabilitation.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🔒</div>
+                    <h3 data-i18n="about_secure_title">Secure & Compliant</h3>
+                    <p data-i18n="about_secure_desc">
+                        Built with JJ Act, POCSO, and data protection compliance.
+                        Child data is encrypted and protected.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="how_badge">Simple Process</span>
+                <h2 class="section-title" data-i18n="how_title">How It Works</h2>
+                <p class="section-description" data-i18n="how_description">
+                    Our streamlined process ensures rapid response and proper care for every child.
+                </p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">📱</div>
+                        <h3 data-i18n="step1_title">Report</h3>
+                        <p data-i18n="step1_desc">
+                            Citizen reports a child in need via app or call. Location, photos,
+                            and description captured automatically.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">🔍</div>
+                        <h3 data-i18n="step2_title">Verify & Match</h3>
+                        <p data-i18n="step2_desc">
+                            System verifies report, assesses urgency, and finds the nearest
+                            appropriate shelter with available capacity.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">🚗</div>
+                        <h3 data-i18n="step3_title">Dispatch & Rescue</h3>
+                        <p data-i18n="step3_desc">
+                            Volunteers and authorities dispatched. Child is safely transported
+                            to the matched shelter facility.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">🏥</div>
+                        <h3 data-i18n="step4_title">Immediate Care</h3>
+                        <p data-i18n="step4_desc">
+                            Medical checkup, basic needs assessment, trauma counseling,
+                            and safe accommodation provided immediately.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">⚖️</div>
+                        <h3 data-i18n="step5_title">Legal Process</h3>
+                        <p data-i18n="step5_desc">
+                            JJ Board case filing, court proceedings, family investigation,
+                            and legal documentation handled systematically.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">6</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">🎓</div>
+                        <h3 data-i18n="step6_title">Rehabilitation</h3>
+                        <p data-i18n="step6_desc">
+                            Education enrollment, skill development, long-term care,
+                            and eventual family reunification or adoption.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="actions-section">
+        <div class="container">
+            <!-- Workflow explanation -->
+            <div class="ai-matching-box">
+                <h3>🔄 How AI Matching Works</h3>
+                <p>
+                    When a <strong>found child</strong> is reported, our AI automatically matches them with
+                    <strong>missing child reports</strong>.
+                    If a match is found, parents, shelters, and authorities are notified instantly!
+                </p>
+            </div>
+
+            <div class="actions-grid actions-grid-3">
+                <!-- Report Found Child -->
+                <a href="new-case.html" class="action-card action-report">
+                    <div class="action-icon">🚨</div>
+                    <h3>Report Found Child</h3>
+                    <p>Spotted a child in need? Report with photo & location for AI matching.</p>
+                    <span class="action-link">Report Found Child →</span>
+                </a>
+                <!-- Report Missing Child -->
+                <a href="missing-child.html" class="action-card action-missing">
+                    <div class="action-icon">💜</div>
+                    <h3>Report Missing Child</h3>
+                    <p>Upload your child's photo. We'll notify you instantly if they're found.</p>
+                    <span class="action-link">Report Missing Child →</span>
+                </a>
+                <!-- Shelter Login -->
+                <a href="dashboard-shelter.html" class="action-card action-shelter">
+                    <div class="action-icon">🏠</div>
+                    <h3 data-i18n="action_shelter_title">Shelter Dashboard</h3>
+                    <p>View match alerts, manage children, and update capacity.</p>
+                    <span class="action-link" data-i18n="action_shelter_link">Access Dashboard →</span>
+                </a>
+            </div>
+
+            <div class="actions-grid actions-grid-2">
+                <a href="register.html" class="action-card action-volunteer">
+                    <div class="action-icon">🤝</div>
+                    <h3 data-i18n="action_volunteer_title">Become a Volunteer</h3>
+                    <p data-i18n="action_volunteer_desc">Join our network of verified volunteers making a difference.
+                    </p>
+                    <span class="action-link" data-i18n="action_volunteer_link">Register Now →</span>
+                </a>
+                <a href="dashboard-government.html" class="action-card action-gov">
+                    <div class="action-icon">🏛️</div>
+                    <h3 data-i18n="action_gov_title">Government Portal</h3>
+                    <p data-i18n="action_gov_desc">DCPU, Police, JJ Board officials access case management.</p>
+                    <span class="action-link" data-i18n="action_gov_link">Official Login →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shelters Map Preview -->
+    <section class="shelters-section" id="shelters">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="shelters_badge">Our Network</span>
+                <h2 class="section-title" data-i18n="shelters_title">Verified Shelter Network</h2>
+                <p class="section-description" data-i18n="shelters_description">
+                    156+ verified shelters across all 33 districts of Telangana,
+                    ready to provide safe haven for children in need.
+                </p>
+            </div>
+            <div class="shelters-preview">
+                <div class="map-container">
+                    <div class="telangana-map" id="telanganaMap">
+                        <!-- Telangana Map Visualization with Districts -->
+                        <div
+                            style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <!-- SVG Map placeholder with districts -->
+                            <svg viewBox="0 0 400 350" style="width: 100%; max-width: 380px; height: auto;">
+                                <!-- Map outline shape -->
+                                <path
+                                    d="M50 100 Q30 150 40 200 Q50 250 100 280 Q150 310 200 300 Q250 290 300 260 Q350 230 370 180 Q380 130 350 90 Q320 50 270 40 Q220 30 170 50 Q120 70 80 90 Z"
+                                    fill="url(#mapGradient)" stroke="var(--primary-400)" stroke-width="2"
+                                    opacity="0.9" />
+                                <defs>
+                                    <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color: #e0f2fe" />
+                                        <stop offset="100%" style="stop-color: #ddd6fe" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- District markers -->
+                                <g class="map-markers">
+                                    <!-- Hyderabad -->
+                                    <circle cx="180" cy="150" r="12" fill="var(--success-500)" stroke="white"
+                                        stroke-width="2">
+                                        <animate attributeName="r" values="12;14;12" dur="2s"
+                                            repeatCount="indefinite" />
+                                    </circle>
+                                    <text x="180" y="175" text-anchor="middle" fill="var(--gray-700)" font-size="10"
+                                        font-weight="600">Hyderabad</text>
+
+                                    <!-- Warangal -->
+                                    <circle cx="280" cy="110" r="10" fill="var(--warning-500)" stroke="white"
+                                        stroke-width="2">
+                                        <animate attributeName="r" values="10;12;10" dur="2.5s"
+                                            repeatCount="indefinite" />
+                                    </circle>
+                                    <text x="280" y="130" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="9">Warangal</text>
+
+                                    <!-- Karimnagar -->
+                                    <circle cx="230" cy="70" r="8" fill="var(--success-500)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="230" y="58" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="9">Karimnagar</text>
+
+                                    <!-- Nizamabad -->
+                                    <circle cx="130" cy="90" r="8" fill="var(--success-500)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="130" y="78" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="9">Nizamabad</text>
+
+                                    <!-- Khammam -->
+                                    <circle cx="330" cy="180" r="9" fill="var(--warning-500)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="330" y="200" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="9">Khammam</text>
+
+                                    <!-- Nalgonda -->
+                                    <circle cx="220" cy="210" r="8" fill="var(--success-500)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="220" y="228" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="9">Nalgonda</text>
+
+                                    <!-- Mahabubnagar -->
+                                    <circle cx="120" cy="240" r="7" fill="var(--danger-400)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="120" y="258" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="8">Mahabubnagar</text>
+
+                                    <!-- Adilabad -->
+                                    <circle cx="160" cy="50" r="7" fill="var(--success-500)" stroke="white"
+                                        stroke-width="2" />
+                                    <text x="160" y="40" text-anchor="middle" fill="var(--gray-600)"
+                                        font-size="8">Adilabad</text>
+                                </g>
+
+                                <!-- Stats overlay -->
+                                <g transform="translate(30, 280)">
+                                    <rect x="0" y="0" width="120" height="45" rx="8" fill="white" opacity="0.95" />
+                                    <text x="10" y="18" font-size="11" font-weight="600" fill="var(--gray-800)">156
+                                        Shelters</text>
+                                    <text x="10" y="35" font-size="10" fill="var(--gray-500)">33 Districts</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="map-overlay">
+                            <div class="map-legend">
+                                <div class="legend-item">
+                                    <span class="legend-dot high"></span>
+                                    <span data-i18n="legend_high">High Capacity</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-dot medium"></span>
+                                    <span data-i18n="legend_medium">Medium Capacity</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-dot low"></span>
+                                    <span data-i18n="legend_low">Limited</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shelters-list">
+                    <div class="shelters-filter">
+                        <input type="text" class="search-input" placeholder="Search district..."
+                            data-i18n-placeholder="search_district" id="shelterSearch">
+                        <select class="filter-select" id="capacityFilter">
+                            <option value="all" data-i18n="filter_all">All Capacity</option>
+                            <option value="high" data-i18n="filter_high">High Availability</option>
+                            <option value="medium" data-i18n="filter_medium">Medium</option>
+                            <option value="low" data-i18n="filter_low">Limited</option>
+                        </select>
+                    </div>
+                    <div class="shelter-cards" id="shelterCards">
+                        <!-- Shelter cards will be populated dynamically -->
+                    </div>
+                    <a href="analytics-dashboard.html" class="btn btn-outline btn-block" data-i18n="view_all_shelters">
+                        View All Shelters & Analytics →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials/Impact Stories -->
+    <section class="impact-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="impact_badge">Impact Stories</span>
+                <h2 class="section-title" data-i18n="impact_title">Lives We've Touched</h2>
+            </div>
+            <div class="impact-slider">
+                <div class="impact-card">
+                    <div class="impact-quote">"</div>
+                    <p class="impact-text" data-i18n="impact_story_1">
+                        "The platform helped reunite me with my daughter within 48 hours.
+                        I can never thank the volunteers enough for their swift action."
+                    </p>
+                    <div class="impact-author">
+                        <div class="author-avatar">👩</div>
+                        <div class="author-info">
+                            <span class="author-name">Lakshmi Devi</span>
+                            <span class="author-role" data-i18n="reunited_parent">Reunited Parent</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-quote">"</div>
+                    <p class="impact-text" data-i18n="impact_story_2">
+                        "As a shelter manager, this platform transformed how we operate.
+                        Real-time capacity tracking and case management saved countless hours."
+                    </p>
+                    <div class="impact-author">
+                        <div class="author-avatar">👨</div>
+                        <div class="author-info">
+                            <span class="author-name">Rajesh Kumar</span>
+                            <span class="author-role" data-i18n="shelter_manager">Shelter Manager, Hyderabad</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-quote">"</div>
+                    <p class="impact-text" data-i18n="impact_story_3">
+                        "The systematic approach to child welfare through technology
+                        is exactly what Telangana needed. Proud to be part of this initiative."
+                    </p>
+                    <div class="impact-author">
+                        <div class="author-avatar">👮</div>
+                        <div class="author-info">
+                            <span class="author-name">Inspector Srinivas</span>
+                            <span class="author-role" data-i18n="dcpu_officer">DCPU Officer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="container">
+            <h3 class="partners-title" data-i18n="partners_title">Trusted By</h3>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <span class="partner-icon">🏛️</span>
+                    <span>Telangana DCPU</span>
+                </div>
+                <div class="partner-logo">
+                    <span class="partner-icon">👮</span>
+                    <span>TS Police</span>
+                </div>
+                <div class="partner-logo">
+                    <span class="partner-icon">⚖️</span>
+                    <span>JJ Board</span>
+                </div>
+                <div class="partner-logo">
+                    <span class="partner-icon">🏥</span>
+                    <span>Health Dept</span>
+                </div>
+                <div class="partner-logo">
+                    <span class="partner-icon">📚</span>
+                    <span>Education Dept</span>
+                </div>
+                <div class="partner-logo">
+                    <span class="partner-icon">📞</span>
+                    <span>Childline 1098</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title" data-i18n="cta_title">
+                    Ready to Make a Difference?
+                </h2>
+                <p class="cta-description" data-i18n="cta_description">
+                    Join our mission to ensure every child in Telangana has access to
+                    safety, care, and opportunity. Your action can save a life.
+                </p>
+                <div class="cta-actions">
+                    <a href="new-case.html" class="btn btn-white btn-lg">
+                        <span class="btn-icon">🚨</span>
+                        <span data-i18n="cta_report">Report a Child</span>
+                    </a>
+                    <a href="register.html" class="btn btn-outline-white btn-lg">
+                        <span class="btn-icon">🤝</span>
+                        <span data-i18n="cta_volunteer">Become a Volunteer</span>
+                    </a>
+                    <a href="donate.html" class="btn btn-outline-white btn-lg cta-donate">
+                        <span class="btn-icon">💝</span>
+                        <span>Donate Now</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 class="contact-title" data-i18n="contact_title">Get In Touch</h2>
+                    <p class="contact-description" data-i18n="contact_description">
+                        Have questions? Want to partner with us? Reach out to our team.
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <div>
+                                <span class="contact-label" data-i18n="emergency_helpline">Emergency Helpline</span>
+                                <a href="tel:1098" class="contact-value">1098</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <span class="contact-label" data-i18n="email">Email</span>
+                                <a href="mailto:support@balaraksha.telangana.gov.in" class="contact-value">
+                                    support@balaraksha.telangana.gov.in
+                                </a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <span class="contact-label" data-i18n="address">Address</span>
+                                <span class="contact-value">
+                                    Women & Child Welfare Department<br>
+                                    Secretariat, Hyderabad - 500022
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label data-i18n="form_name">Your Name</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="form_email">Email Address</label>
+                            <input type="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="form_subject">Subject</label>
+                            <select class="form-input">
+                                <option data-i18n="subject_partnership">Partnership Inquiry</option>
+                                <option data-i18n="subject_volunteer">Volunteer Registration</option>
+                                <option data-i18n="subject_shelter">Shelter Registration</option>
+                                <option data-i18n="subject_other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="form_message">Message</label>
+                            <textarea class="form-input" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" data-i18n="form_submit">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">🏠</div>
+                        <div class="logo-text">
+                            <span class="logo-primary">బాలరక్ష</span>
+                            <span class="logo-secondary">Child Welfare Platform</span>
+                        </div>
+                    </div>
+                    <p class="footer-description" data-i18n="footer_description">
+                        A technology initiative for child protection across Telangana,
+                        connecting vulnerable children to safety and support.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">📺</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer_quick_links">Quick Links</h4>
+                    <a href="new-case.html" data-i18n="footer_report">Report a Child</a>
+                    <a href="finder.html" data-i18n="footer_shelters">Find Shelters</a>
+                    <a href="register.html" data-i18n="footer_volunteer">Volunteer</a>
+                    <a href="donate.html">💝 Donate</a>
+                    <a href="stories.html">Success Stories</a>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer_portals">Portals</h4>
+                    <a href="login.html" data-i18n="footer_citizen">Citizen Login</a>
+                    <a href="dashboard-shelter.html" data-i18n="footer_shelter">Shelter Dashboard</a>
+                    <a href="dashboard-government.html" data-i18n="footer_gov">Government Portal</a>
+                    <a href="dashboard-volunteer.html" data-i18n="footer_vol_portal">Volunteer Portal</a>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer_terms">Terms of Use</a>
+                    <a href="#" data-i18n="footer_jj_act">JJ Act Compliance</a>
+                    <a href="#" data-i18n="footer_pocso">POCSO Guidelines</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">
+                    © 2025 బాలరక్ష - Telangana Child Welfare Platform. All rights reserved.
+                </p>
+                <p class="footer-gov" data-i18n="footer_gov_text">
+                    An initiative in partnership with Government of Telangana
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating SOS Button -->
+    <a href="tel:1098" class="sos-float" title="Emergency Childline">
+        <span style="font-size: 24px;">🆘</span>
+        <span style="font-size: 10px; font-weight: 700;">1098</span>
+    </a>
+    <style>
+        .sos-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            animation: sos-pulse 2s infinite;
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .sos-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes sos-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 8px 32px rgba(220, 38, 38, 0.7);
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="i18n.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        // Premium Page Load Animations - Smooth, Sequential, No Collision
+        window.addEventListener('load', () => {
+            // PHASE 1: Left side hero content (0ms - 600ms)
+
+            // Hero badge - fade in first
+            const heroBadge = document.querySelector('.hero-badge');
+            if (heroBadge) {
+                heroBadge.style.opacity = '0';
+                heroBadge.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    heroBadge.style.transition = 'all 0.5s ease-out';
+                    heroBadge.style.opacity = '1';
+                    heroBadge.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // Hero text section - slide from left
+            const heroText = document.querySelector('.hero-text');
+            if (heroText) {
+                heroText.style.opacity = '0';
+                heroText.style.transform = 'translateX(-40px)';
+                setTimeout(() => {
+                    heroText.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                    heroText.style.opacity = '1';
+                    heroText.style.transform = 'translateX(0)';
+                }, 150);
+            }
+
+            // Hero buttons - slide up after text
+            const heroActions = document.querySelector('.hero-actions');
+            if (heroActions) {
+                heroActions.style.opacity = '0';
+                heroActions.style.transform = 'translateY(25px)';
+                setTimeout(() => {
+                    heroActions.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    heroActions.style.opacity = '1';
+                    heroActions.style.transform = 'translateY(0)';
+                }, 500);
+            }
+
+            // Trust logos - fade in
+            const heroTrust = document.querySelector('.hero-trust');
+            if (heroTrust) {
+                heroTrust.style.opacity = '0';
+                setTimeout(() => {
+                    heroTrust.style.transition = 'opacity 0.5s ease';
+                    heroTrust.style.opacity = '1';
+                }, 700);
+            }
+
+            // PHASE 2: Right side hero visual (700ms - 1500ms) - AFTER left side loads
+
+            // Hero visual container
+            const heroVisual = document.querySelector('.hero-visual');
+            if (heroVisual) {
+                heroVisual.style.opacity = '0';
+                setTimeout(() => {
+                    heroVisual.style.transition = 'opacity 0.3s ease';
+                    heroVisual.style.opacity = '1';
+                }, 600);
+            }
+
+            // Main card (Live Tracking) - slide from right FIRST
+            const mainCard = document.querySelector('.main-card');
+            if (mainCard) {
+                mainCard.style.opacity = '0';
+                mainCard.style.transform = 'translate(-50%, -50%) translateX(60px) scale(0.95)';
+                setTimeout(() => {
+                    mainCard.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                    mainCard.style.opacity = '1';
+                    mainCard.style.transform = 'translate(-50%, -50%) translateX(0) scale(1)';
+                }, 700);
+            }
+
+            // Map markers INSIDE Live Tracking - pop in after card appears
+            const miniMapMarkers = document.querySelectorAll('#miniMap .map-marker');
+            miniMapMarkers.forEach((marker, i) => {
+                marker.style.opacity = '0';
+                marker.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    marker.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    marker.style.opacity = '1';
+                    marker.style.transform = 'scale(1)';
+                }, 1100 + (i * 120));
+            });
+
+            // Map pulse - fade in
+            const mapPulse = document.querySelector('.map-pulse');
+            if (mapPulse) {
+                mapPulse.style.opacity = '0';
+                setTimeout(() => {
+                    mapPulse.style.transition = 'opacity 0.5s ease';
+                    mapPulse.style.opacity = '1';
+                }, 1400);
+            }
+
+            // PHASE 3: Floating cards - appear AFTER Live Tracking is fully visible (1500ms+)
+            const floatingCards = document.querySelectorAll('.floating-card');
+            floatingCards.forEach((card, i) => {
+                // Completely disable float animation initially
+                card.style.animation = 'none';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px) scale(0.9)';
+
+                // Pop in with stagger - MUCH later than Live Tracking
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+
+                    // Re-enable float animation after entrance is complete
+                    setTimeout(() => {
+                        card.style.transition = 'none';
+                        card.style.animation = `float 4s ease-in-out infinite ${i * 0.5}s`;
+                    }, 600);
+                }, 1600 + (i * 250)); // Start at 1600ms, 250ms between each
+            });
+
+            // PHASE 4: Below-the-fold content (after scroll indicator)
+
+            // Stats section cards
+            const statCards = document.querySelectorAll('.stats-section .stat-card');
+            statCards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(25px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 2200 + (i * 80));
+            });
+
+            // Quick action cards
+            const actionCards = document.querySelectorAll('.action-card');
+            actionCards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(25px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 2500 + (i * 80));
+            });
+        });
+    </script>
+</body>
+
+</html>

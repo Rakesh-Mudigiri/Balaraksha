@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Child in Need | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .report-page {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .report-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .report-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .report-container {
+            max-width: 800px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .steps-indicator {
+            display: flex;
+            background: var(--gray-50);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .step.active,
+        .step.completed {
+            opacity: 1;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .step.active .step-number {
+            background: var(--primary-600);
+        }
+
+        .step.completed .step-number {
+            background: var(--success-500);
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .step-connector {
+            flex: 0.5;
+            height: 2px;
+            background: var(--gray-300);
+            margin: 0 8px;
+        }
+
+        .step-connector.active {
+            background: var(--primary-400);
+        }
+
+        .form-section {
+            padding: 32px;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-grid.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .urgency-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .urgency-option {
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .urgency-option:hover {
+            border-color: var(--gray-300);
+        }
+
+        .urgency-option.selected {
+            border-color: var(--primary-500);
+            background: var(--primary-50);
+        }
+
+        .urgency-option.critical {
+            border-color: var(--danger-500);
+            background: var(--danger-50);
+        }
+
+        .urgency-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .urgency-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+
+        .urgency-desc {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--gray-50);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-400);
+            background: var(--primary-50);
+        }
+
+        .upload-area.has-files {
+            border-style: solid;
+            border-color: var(--success-500);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .file-item {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            background: var(--gray-200);
+        }
+
+        .file-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .location-picker {
+            background: var(--gray-100);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .location-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .location-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .location-text h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 2px;
+        }
+
+        .location-text p {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .location-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-600), var(--danger-500));
+            color: white;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-600);
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+
+        .checkbox-label strong {
+            color: var(--gray-900);
+        }
+
+        .success-section {
+            text-align: center;
+            padding: 60px 32px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .case-id {
+            background: var(--primary-50);
+            padding: 16px 24px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 32px;
+        }
+
+        .case-id-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 4px;
+        }
+
+        .case-id-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-700);
+        }
+
+        .emergency-notice {
+            background: var(--danger-50);
+            border: 1px solid var(--danger-200);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .emergency-notice-icon {
+            font-size: 24px;
+        }
+
+        .emergency-notice-text {
+            font-size: 14px;
+            color: var(--danger-700);
+        }
+
+        .emergency-notice-text strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .report-header {
+                padding: 100px 20px 80px;
+            }
+
+            .report-header h1 {
+                font-size: 28px;
+            }
+
+            .steps-indicator {
+                overflow-x: auto;
+                padding: 16px;
+            }
+
+            .step-label {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .urgency-options {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                gap: 12px;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="report-page">
+    <!-- Header -->
+    <header class="report-header">
+        <div class="container">
+            <a href="index.html"
+                style="color: white; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; opacity: 0.9;">
+                ← Back to Home
+            </a>
+            <h1>🚨 Report a Child in Need</h1>
+            <p>Help us reach children who need immediate assistance</p>
+        </div>
+    </header>
+
+    <div class="report-container">
+        <!-- Emergency Notice -->
+        <div class="emergency-notice" style="margin-top: 20px;">
+            <span class="emergency-notice-icon">⚠️</span>
+            <div class="emergency-notice-text">
+                <strong>Immediate Emergency?</strong>
+                If the child is in immediate danger, call <strong>1098 (Childline)</strong> or <strong>100
+                    (Police)</strong> first, then submit this report.
+            </div>
+        </div>
+
+        <div class="report-card">
+            <!-- Progress Steps -->
+            <div class="steps-indicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <span class="step-label">Location</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <span class="step-label">Child Details</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <span class="step-label">Photos</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <span class="step-label">Submit</span>
+                </div>
+            </div>
+
+            <form id="reportForm">
+                <!-- Step 1: Location -->
+                <div class="form-section active" id="section1">
+                    <h3 class="section-title">Where is the child?</h3>
+                    <p class="section-subtitle">Help us locate the child quickly with accurate location information</p>
+
+                    <div class="location-picker">
+                        <div class="location-status">
+                            <div class="location-icon" id="locationIcon">📍</div>
+                            <div class="location-text">
+                                <h4 id="locationTitle">Get Current Location</h4>
+                                <p id="locationCoords">Click the button below to auto-detect your location</p>
+                            </div>
+                        </div>
+                        <div class="location-actions">
+                            <button type="button" class="btn btn-primary" id="getLocationBtn">
+                                📍 Use My Location
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="manualLocationBtn">
+                                ✏️ Enter Manually
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label">Address / Location Description *</label>
+                            <input type="text" class="form-input" id="address"
+                                placeholder="e.g., Near Charminar, Old City" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">District *</label>
+                            <select class="form-select" id="district" required>
+                                <option value="">Select District</option>
+                                <!-- Districts will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Landmark</label>
+                            <input type="text" class="form-input" id="landmark" placeholder="Nearby landmark">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div></div>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Child Details -->
+                <div class="form-section" id="section2">
+                    <h3 class="section-title">Tell us about the child</h3>
+                    <p class="section-subtitle">Any information helps us provide appropriate care</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Estimated Age</label>
+                            <select class="form-select" id="age">
+                                <option value="">Not sure</option>
+                                <option value="0-2">Infant (0-2 years)</option>
+                                <option value="3-5">Toddler (3-5 years)</option>
+                                <option value="6-10">Child (6-10 years)</option>
+                                <option value="11-14">Pre-teen (11-14 years)</option>
+                                <option value="15-18">Teenager (15-18 years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" id="gender">
+                                <option value="">Not sure</option>
+                                <option value="male">Boy</option>
+                                <option value="female">Girl</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Physical Description</label>
+                            <input type="text" class="form-input" id="description"
+                                placeholder="e.g., Blue shirt, dark hair, barefoot">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Observed Condition</label>
+                            <textarea class="form-textarea" id="condition"
+                                placeholder="Describe the child's apparent condition (e.g., appears hungry, injured, crying)"></textarea>
+                        </div>
+                    </div>
+
+                    <h4 style="margin: 24px 0 16px; font-size: 16px; color: var(--gray-800);">Urgency Level</h4>
+                    <div class="urgency-options">
+                        <div class="urgency-option critical selected" data-level="critical"
+                            onclick="selectUrgency(this)">
+                            <div class="urgency-icon">🚨</div>
+                            <span class="urgency-label">Critical</span>
+                            <span class="urgency-desc">Immediate danger or injury</span>
+                        </div>
+                        <div class="urgency-option" data-level="high" onclick="selectUrgency(this)">
+                            <div class="urgency-icon">⚡</div>
+                            <span class="urgency-label">High</span>
+                            <span class="urgency-desc">Needs help within hours</span>
+                        </div>
+                        <div class="urgency-option" data-level="medium" onclick="selectUrgency(this)">
+                            <div class="urgency-icon">📋</div>
+                            <span class="urgency-label">Standard</span>
+                            <span class="urgency-desc">Requires attention</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)">
+                            ← Back
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Photos -->
+                <div class="form-section" id="section3">
+                    <h3 class="section-title">Add Photos (Optional)</h3>
+                    <p class="section-subtitle">Photos help our team identify and assist the child faster</p>
+
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">Click to upload photos or take a picture</div>
+                        <div class="upload-hint">Max 5 images, each up to 10MB. JPG, PNG supported.</div>
+                        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+                    </div>
+                    <div class="file-preview" id="filePreview"></div>
+
+                    <div style="margin-top: 24px; padding: 16px; background: var(--primary-50); border-radius: 10px;">
+                        <p style="font-size: 13px; color: var(--primary-700);">
+                            🔒 <strong>Privacy Note:</strong> Uploaded photos are encrypted and only accessible to
+                            authorized personnel.
+                            Child faces are automatically blurred in reports to protect their identity.
+                        </p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
+                            ← Back
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirm & Submit -->
+                <div class="form-section" id="section4">
+                    <h3 class="section-title">Review & Submit</h3>
+                    <p class="section-subtitle">Please verify the information before submitting</p>
+
+                    <div id="reviewSummary"
+                        style="background: var(--gray-50); padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                        <!-- Summary will be populated dynamically -->
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="anonymous" checked>
+                        <label class="checkbox-label" for="anonymous">
+                            <strong>Report Anonymously</strong><br>
+                            Your identity will not be shared with anyone
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group" style="margin-top: 12px;">
+                        <input type="checkbox" id="consent" required>
+                        <label class="checkbox-label" for="consent">
+                            <strong>I confirm this is a genuine report</strong><br>
+                            I understand that false reports may result in legal action
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
+                            ← Back
+                        </button>
+                        <button type="submit" class="btn btn-danger" id="submitBtn">
+                            🚨 Submit Emergency Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Section -->
+                <div class="form-section" id="successSection">
+                    <div class="success-section">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">Report Submitted Successfully!</h2>
+                        <p class="success-message">
+                            Our team has been notified and will respond immediately.<br>
+                            Thank you for helping protect a child in need.
+                        </p>
+                        <div class="case-id">
+                            <div class="case-id-label">Your Case Reference</div>
+                            <div class="case-id-value" id="caseIdDisplay">CASE-2024-001248</div>
+                        </div>
+                        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 24px;">
+                            Save this reference number to track the case status
+                        </p>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <a href="index.html" class="btn btn-secondary">Return Home</a>
+                            <a href="dashboard-citizen.html" class="btn btn-primary">Track Case</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="data.js"></script>
+    <script src="matching.js"></script>
+    <script>
+        let currentStep = 1;
+        let uploadedFiles = [];
+        let userLocation = null;
+        let selectedUrgency = 'critical';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDistricts();
+            setupFileUpload();
+        });
+
+        // Populate districts
+        function populateDistricts() {
+            const select = document.getElementById('district');
+            if (window.appData && window.appData.districts) {
+                window.appData.districts.forEach(d => {
+                    const option = document.createElement('option');
+                    option.value = d.name;
+                    option.textContent = d.name;
+                    select.appendChild(option);
+                });
+            }
+        }
+
+        // Get Location
+        document.getElementById('getLocationBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('getLocationBtn');
+            const icon = document.getElementById('locationIcon');
+            const title = document.getElementById('locationTitle');
+            const coords = document.getElementById('locationCoords');
+
+            btn.textContent = 'Getting location...';
+            btn.disabled = true;
+
+            try {
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 10000
+                    });
+                });
+
+                userLocation = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+
+                icon.textContent = '✓';
+                icon.style.background = 'var(--success-100)';
+                title.textContent = 'Location Captured';
+                coords.textContent = `${userLocation.latitude.toFixed(6)}, ${userLocation.longitude.toFixed(6)}`;
+                btn.textContent = '✓ Location Set';
+                btn.style.background = 'var(--success-500)';
+
+            } catch (error) {
+                icon.textContent = '❌';
+                title.textContent = 'Location Error';
+                coords.textContent = 'Please enter address manually';
+                btn.textContent = 'Try Again';
+                btn.disabled = false;
+            }
+        });
+
+        // Manual location
+        document.getElementById('manualLocationBtn').addEventListener('click', () => {
+            document.getElementById('address').focus();
+        });
+
+        // Urgency selection
+        function selectUrgency(element) {
+            document.querySelectorAll('.urgency-option').forEach(opt => {
+                opt.classList.remove('selected', 'critical');
+            });
+            element.classList.add('selected');
+            if (element.dataset.level === 'critical') {
+                element.classList.add('critical');
+            }
+            selectedUrgency = element.dataset.level;
+        }
+
+        // File upload
+        function setupFileUpload() {
+            const input = document.getElementById('fileInput');
+            const preview = document.getElementById('filePreview');
+            const area = document.getElementById('uploadArea');
+
+            input.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                files.forEach(file => {
+                    if (uploadedFiles.length >= 5) return;
+                    if (!file.type.startsWith('image/')) return;
+                    if (file.size > 10 * 1024 * 1024) return;
+
+                    uploadedFiles.push(file);
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const div = document.createElement('div');
+                        div.className = 'file-item';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" alt="Upload">
+                            <button type="button" class="file-remove" onclick="removeFile(${uploadedFiles.length - 1})">×</button>
+                        `;
+                        preview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                if (uploadedFiles.length > 0) {
+                    area.classList.add('has-files');
+                }
+            });
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            const preview = document.getElementById('filePreview');
+            preview.innerHTML = '';
+            uploadedFiles.forEach((file, i) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Upload">
+                        <button type="button" class="file-remove" onclick="removeFile(${i})">×</button>
+                    `;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+            if (uploadedFiles.length === 0) {
+                document.getElementById('uploadArea').classList.remove('has-files');
+            }
+        }
+
+        // Navigation
+        function nextStep(step) {
+            // Validate current step
+            if (currentStep === 1) {
+                const address = document.getElementById('address').value;
+                const district = document.getElementById('district').value;
+                if (!address || !district) {
+                    alert('Please enter the location and district');
+                    return;
+                }
+            }
+
+            currentStep = step;
+            updateSteps();
+
+            if (step === 4) {
+                generateReviewSummary();
+            }
+        }
+
+        function prevStep(step) {
+            currentStep = step;
+            updateSteps();
+        }
+
+        function updateSteps() {
+            // Update step indicators
+            for (let i = 1; i <= 4; i++) {
+                const stepEl = document.getElementById('step' + i);
+                const sectionEl = document.getElementById('section' + i);
+
+                stepEl.classList.remove('active', 'completed');
+                sectionEl.classList.remove('active');
+
+                if (i < currentStep) {
+                    stepEl.classList.add('completed');
+                } else if (i === currentStep) {
+                    stepEl.classList.add('active');
+                    sectionEl.classList.add('active');
+                }
+            }
+        }
+
+        function generateReviewSummary() {
+            const summary = document.getElementById('reviewSummary');
+            const address = document.getElementById('address').value;
+            const district = document.getElementById('district').value;
+            const age = document.getElementById('age').value || 'Not specified';
+            const gender = document.getElementById('gender').value || 'Not specified';
+            const description = document.getElementById('description').value || 'Not provided';
+            const condition = document.getElementById('condition').value || 'Not provided';
+
+            summary.innerHTML = `
+                <div style="display: grid; gap: 16px;">
+                    <div>
+                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">📍 Location</div>
+                        <div style="font-weight: 500;">${address}, ${district}</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div>
+                            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Age</div>
+                            <div style="font-weight: 500;">${age}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Gender</div>
+                            <div style="font-weight: 500;">${gender}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Description</div>
+                        <div style="font-weight: 500;">${description}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Condition</div>
+                        <div style="font-weight: 500;">${condition}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Urgency</div>
+                        <div style="font-weight: 500; color: var(--danger-600);">${selectedUrgency.toUpperCase()}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Photos</div>
+                        <div style="font-weight: 500;">${uploadedFiles.length} uploaded</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Form submission
+        document.getElementById('reportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const consent = document.getElementById('consent').checked;
+            if (!consent) {
+                alert('Please confirm that this is a genuine report');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            // Simulate API call
+            await new Promise(r => setTimeout(r, 2000));
+
+            // Generate case ID
+            const caseId = 'CASE-2024-' + String(Math.floor(Math.random() * 9000) + 1000).padStart(6, '0');
+            document.getElementById('caseIdDisplay').textContent = caseId;
+
+            // Find nearby shelters based on district
+            const district = document.getElementById('district').value;
+            let nearbyShelters = [];
+
+            if (window.appData && window.appData.shelters) {
+                // Find shelters in the same district or nearby
+                nearbyShelters = window.appData.shelters
+                    .filter(s => s.district === district || s.districtId <= 3) // Same district or Hyderabad area
+                    .filter(s => (s.capacity - s.currentOccupancy) > 0) // Has available beds
+                    .slice(0, 5) // Max 5 nearby shelters
+                    .map(s => ({
+                        id: s.id,
+                        name: s.name,
+                        district: s.district,
+                        availableBeds: s.capacity - s.currentOccupancy,
+                        notifiedAt: new Date().toISOString(),
+                        status: 'pending' // pending, accepted, declined
+                    }));
+            }
+
+            // Save case to localStorage for demo
+            const caseData = {
+                id: caseId,
+                address: document.getElementById('address').value,
+                district: district,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                description: document.getElementById('description').value,
+                condition: document.getElementById('condition').value,
+                urgency: selectedUrgency,
+                location: userLocation,
+                anonymous: document.getElementById('anonymous').checked,
+                status: 'reported',
+                reportedAt: new Date().toISOString(),
+                // Shelter coordination fields
+                nearbyShelters: nearbyShelters,
+                assignedShelter: null, // Set when a shelter accepts
+                shelterNotifiedAt: new Date().toISOString()
+            };
+
+            const cases = JSON.parse(localStorage.getItem('balaraksha_cases') || '[]');
+            cases.push(caseData);
+            localStorage.setItem('balaraksha_cases', JSON.stringify(cases));
+
+            // Create shelter notifications
+            const notifications = JSON.parse(localStorage.getItem('balaraksha_shelter_notifications') || '[]');
+            nearbyShelters.forEach(shelter => {
+                notifications.push({
+                    id: 'NOTIF-' + Date.now() + '-' + shelter.id,
+                    type: 'new_case',
+                    caseId: caseId,
+                    shelterId: shelter.id,
+                    shelterName: shelter.name,
+                    message: `New ${selectedUrgency.toUpperCase()} case reported near ${district}`,
+                    childInfo: {
+                        age: document.getElementById('age').value || 'Unknown',
+                        gender: document.getElementById('gender').value || 'Unknown'
+                    },
+                    createdAt: new Date().toISOString(),
+                    read: false,
+                    responded: false
+                });
+            });
+            localStorage.setItem('balaraksha_shelter_notifications', JSON.stringify(notifications));
+
+            // Check for matches with missing children
+            let matchesFound = [];
+            if (window.MatchingSystem) {
+                matchesFound = window.MatchingSystem.findMatchesForFoundChild(caseData);
+
+                if (matchesFound.length > 0) {
+                    // Create notifications for matches
+                    window.MatchingSystem.createMatchNotifications(caseData, matchesFound);
+
+                    // Store matches for shelter review
+                    const shelterMatches = JSON.parse(localStorage.getItem('balaraksha_shelter_matches') || '[]');
+                    matchesFound.forEach(match => {
+                        shelterMatches.push({
+                            id: 'MATCH-' + Date.now(),
+                            foundChild: caseData,
+                            missingChild: match.missingChild,
+                            matchScore: match.matchScore,
+                            confidence: match.confidence,
+                            createdAt: new Date().toISOString(),
+                            status: 'pending_review'
+                        });
+                    });
+                    localStorage.setItem('balaraksha_shelter_matches', JSON.stringify(shelterMatches));
+                }
+            }
+
+            // Show success
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('successSection').classList.add('active');
+            document.querySelector('.steps-indicator').style.display = 'none';
+
+            // If matches found, show match notification
+            if (matchesFound.length > 0) {
+                showMatchAlert(matchesFound);
+            }
+        });
+
+        // Show match alert function
+        function showMatchAlert(matches) {
+            const successSection = document.querySelector('.success-section');
+            const matchAlert = document.createElement('div');
+            matchAlert.className = 'match-alert';
+            matchAlert.innerHTML = `
+                <div style="background: linear-gradient(135deg, #dcfce7, #bbf7d0); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin-top: 24px; animation: slideIn 0.5s ease;">
+                    <h4 style="display: flex; align-items: center; gap: 10px; color: #166534; font-size: 18px; margin-bottom: 12px;">
+                        🎉 Potential Match Found!
+                    </h4>
+                    <p style="color: #15803d; margin-bottom: 16px;">
+                        This child may match <strong>${matches.length}</strong> missing child report(s)!<br>
+                        Parents and authorities have been notified automatically.
+                    </p>
+                    <div style="background: white; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+                        <div style="font-weight: 600; color: #166534; margin-bottom: 8px;">Top Match:</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #374151;">${matches[0].missingChild.childName || 'Missing Child'}</span>
+                            <span style="background: #22c55e; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600;">
+                                ${matches[0].matchScore}% Match
+                            </span>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: #15803d;">
+                        📞 Parent contact: ${matches[0].missingChild.phoneNumber || 'Pending verification'}
+                    </p>
+                </div>
+            `;
+
+            // Add animation keyframes
+            if (!document.querySelector('#matchAlertStyles')) {
+                const style = document.createElement('style');
+                style.id = 'matchAlertStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { opacity: 0; transform: translateY(-10px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            successSection.appendChild(matchAlert);
+        }
+    </script>
+</body>
+
+</html>

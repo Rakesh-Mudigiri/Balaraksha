@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate | Support Children | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .donate-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #fef3c7 0%, #fff 20%);
+        }
+
+        .donate-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .donate-header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .donate-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .impact-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 40px;
+        }
+
+        .impact-stat {
+            text-align: center;
+        }
+
+        .impact-stat-number {
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .impact-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .donate-container {
+            max-width: 1100px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .donate-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 32px;
+        }
+
+        .donate-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .donate-card-header {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .donate-card-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .donate-card-body {
+            padding: 32px;
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .amount-btn {
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            font-size: 18px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .amount-btn:hover {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .amount-btn.selected {
+            border-color: #f59e0b;
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .custom-amount {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .custom-amount span {
+            font-size: 24px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .custom-amount input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .custom-amount input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .donation-type {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .type-btn:hover {
+            border-color: #d1d5db;
+        }
+
+        .type-btn.selected {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 100px;
+            padding: 16px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #d1d5db;
+        }
+
+        .payment-method.selected {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .payment-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .payment-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .btn-donate {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-donate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .allocation-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+        }
+
+        .allocation-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 24px;
+        }
+
+        .allocation-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .allocation-item:last-child {
+            border-bottom: none;
+        }
+
+        .allocation-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .allocation-info {
+            flex: 1;
+        }
+
+        .allocation-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .allocation-desc {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .allocation-percent {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .tax-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .tax-info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 4px;
+        }
+
+        .tax-info-text {
+            font-size: 13px;
+            color: #15803d;
+        }
+
+        .sponsor-section {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border-radius: 16px;
+        }
+
+        .sponsor-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 12px;
+        }
+
+        .sponsor-desc {
+            font-size: 14px;
+            color: #7c3aed;
+            margin-bottom: 16px;
+        }
+
+        .sponsor-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .sponsor-option {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sponsor-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsor-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #5b21b6;
+        }
+
+        .sponsor-period {
+            font-size: 12px;
+            color: #7c3aed;
+        }
+
+        .sponsor-benefit {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        .receipt-id {
+            background: #f3f4f6;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 992px) {
+            .donate-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-stats {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .donate-header h1 {
+                font-size: 28px;
+            }
+
+            .sponsor-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="donate-page">
+    <!-- Header -->
+    <header class="donate-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>🧡 Support a Child's Future</h1>
+            <p>Every rupee you donate helps rescue, shelter, and rehabilitate vulnerable children across Telangana.</p>
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <div class="impact-stat-number">₹2.4 Cr</div>
+                    <div class="impact-stat-label">Raised This Year</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-stat-number">1,247</div>
+                    <div class="impact-stat-label">Children Helped</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-stat-number">8,500+</div>
+                    <div class="impact-stat-label">Donors</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="donate-container">
+        <div class="donate-grid">
+            <!-- Donation Form -->
+            <div class="donate-card">
+                <div class="donate-card-header">
+                    <h2>💝 Make a Donation</h2>
+                </div>
+                <div class="donate-card-body">
+                    <form id="donationForm">
+                        <!-- Donation Type -->
+                        <div class="donation-type">
+                            <button type="button" class="type-btn selected" data-type="one-time">
+                                🎁 One-time
+                            </button>
+                            <button type="button" class="type-btn" data-type="monthly">
+                                🔄 Monthly
+                            </button>
+                        </div>
+
+                        <!-- Amount Options -->
+                        <div class="amount-options">
+                            <button type="button" class="amount-btn" data-amount="500">₹500</button>
+                            <button type="button" class="amount-btn selected" data-amount="1000">₹1,000</button>
+                            <button type="button" class="amount-btn" data-amount="2500">₹2,500</button>
+                            <button type="button" class="amount-btn" data-amount="5000">₹5,000</button>
+                            <button type="button" class="amount-btn" data-amount="10000">₹10,000</button>
+                            <button type="button" class="amount-btn" data-amount="25000">₹25,000</button>
+                        </div>
+
+                        <div class="custom-amount">
+                            <span>₹</span>
+                            <input type="number" id="customAmount" placeholder="Enter custom amount" min="100">
+                        </div>
+
+                        <!-- Donor Info -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" class="form-input" name="name" placeholder="Your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-input" name="phone" placeholder="+91 98765 43210"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" name="email" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">PAN Card (for 80G tax benefit)</label>
+                            <input type="text" class="form-input" name="pan" placeholder="ABCDE1234F" maxlength="10"
+                                style="text-transform: uppercase;">
+                        </div>
+
+                        <!-- Payment Methods -->
+                        <label class="form-label">Payment Method</label>
+                        <div class="payment-methods">
+                            <div class="payment-method selected" data-method="upi">
+                                <div class="payment-icon">📱</div>
+                                <div class="payment-name">UPI</div>
+                            </div>
+                            <div class="payment-method" data-method="card">
+                                <div class="payment-icon">💳</div>
+                                <div class="payment-name">Card</div>
+                            </div>
+                            <div class="payment-method" data-method="netbanking">
+                                <div class="payment-icon">🏦</div>
+                                <div class="payment-name">Net Banking</div>
+                            </div>
+                            <div class="payment-method" data-method="wallet">
+                                <div class="payment-icon">👛</div>
+                                <div class="payment-name">Wallet</div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-donate">
+                            <span>❤️</span>
+                            Donate ₹<span id="donateAmount">1,000</span>
+                        </button>
+
+                        <div class="trust-badges">
+                            <div class="trust-badge">🔒 Secure Payment</div>
+                            <div class="trust-badge">📜 80G Tax Exempt</div>
+                            <div class="trust-badge">✅ FCRA Registered</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Fund Allocation -->
+                <div class="allocation-card">
+                    <h3 class="allocation-title">📊 How Your Donation Helps</h3>
+
+                    <div class="allocation-item">
+                        <div class="allocation-icon" style="background: #fef3c7;">🍲</div>
+                        <div class="allocation-info">
+                            <div class="allocation-name">Food & Nutrition</div>
+                            <div class="allocation-desc">Healthy meals for shelter children</div>
+                        </div>
+                        <div class="allocation-percent">35%</div>
+                    </div>
+
+                    <div class="allocation-item">
+                        <div class="allocation-icon" style="background: #dbeafe;">📚</div>
+                        <div class="allocation-info">
+                            <div class="allocation-name">Education</div>
+                            <div class="allocation-desc">School fees, books, uniforms</div>
+                        </div>
+                        <div class="allocation-percent">25%</div>
+                    </div>
+
+                    <div class="allocation-item">
+                        <div class="allocation-icon" style="background: #dcfce7;">🏥</div>
+                        <div class="allocation-info">
+                            <div class="allocation-name">Healthcare</div>
+                            <div class="allocation-desc">Medical checkups & treatments</div>
+                        </div>
+                        <div class="allocation-percent">20%</div>
+                    </div>
+
+                    <div class="allocation-item">
+                        <div class="allocation-icon" style="background: #fce7f3;">🏠</div>
+                        <div class="allocation-info">
+                            <div class="allocation-name">Shelter Operations</div>
+                            <div class="allocation-desc">Maintenance & utilities</div>
+                        </div>
+                        <div class="allocation-percent">15%</div>
+                    </div>
+
+                    <div class="allocation-item">
+                        <div class="allocation-icon" style="background: #e0e7ff;">🚗</div>
+                        <div class="allocation-info">
+                            <div class="allocation-name">Rescue Operations</div>
+                            <div class="allocation-desc">Transport & field work</div>
+                        </div>
+                        <div class="allocation-percent">5%</div>
+                    </div>
+
+                    <div class="tax-info">
+                        <div class="tax-info-title">💰 Tax Benefits</div>
+                        <div class="tax-info-text">
+                            All donations are eligible for 50% tax deduction under Section 80G of the Income Tax Act.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Child Sponsorship -->
+                <div class="sponsor-section">
+                    <h3 class="sponsor-title">👶 Sponsor a Child</h3>
+                    <p class="sponsor-desc">Make a lasting impact by sponsoring a child's complete care.</p>
+                    <div class="sponsor-options">
+                        <div class="sponsor-option">
+                            <div class="sponsor-amount">₹2,000</div>
+                            <div class="sponsor-period">per month</div>
+                            <div class="sponsor-benefit">Education support</div>
+                        </div>
+                        <div class="sponsor-option">
+                            <div class="sponsor-amount">₹5,000</div>
+                            <div class="sponsor-period">per month</div>
+                            <div class="sponsor-benefit">Full care package</div>
+                        </div>
+                        <div class="sponsor-option">
+                            <div class="sponsor-amount">₹60,000</div>
+                            <div class="sponsor-period">per year</div>
+                            <div class="sponsor-benefit">Annual sponsorship</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">🎉</div>
+            <h3 class="success-title">Thank You!</h3>
+            <p class="success-message">Your generous donation will help protect and nurture children across Telangana.
+            </p>
+            <div class="receipt-id" id="receiptId">TXN-2024-XXXXXX</div>
+            <p style="font-size: 13px; color: #6b7280; margin-bottom: 20px;">
+                Receipt sent to your email. Keep this for tax purposes.
+            </p>
+            <button class="btn-donate" onclick="closeModal()" style="max-width: 200px; margin: 0 auto;">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let selectedAmount = 1000;
+        let donationType = 'one-time';
+        let paymentMethod = 'upi';
+
+        // Amount selection
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedAmount = parseInt(btn.dataset.amount);
+                document.getElementById('customAmount').value = '';
+                updateDonateButton();
+            });
+        });
+
+        // Custom amount
+        document.getElementById('customAmount').addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            if (val >= 100) {
+                selectedAmount = val;
+                document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+                updateDonateButton();
+            }
+        });
+
+        // Donation type
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                donationType = btn.dataset.type;
+            });
+        });
+
+        // Payment method
+        document.querySelectorAll('.payment-method').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.payment-method').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                paymentMethod = btn.dataset.method;
+            });
+        });
+
+        function updateDonateButton() {
+            document.getElementById('donateAmount').textContent = selectedAmount.toLocaleString();
+        }
+
+        // Form submission
+        document.getElementById('donationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('.btn-donate');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+
+            // Simulate payment
+            await new Promise(r => setTimeout(r, 2000));
+
+            // Generate receipt
+            const receiptId = 'TXN-2024-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('receiptId').textContent = receiptId;
+
+            // Save donation
+            const donations = JSON.parse(localStorage.getItem('balaraksha_donations') || '[]');
+            donations.push({
+                id: receiptId,
+                amount: selectedAmount,
+                type: donationType,
+                method: paymentMethod,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('balaraksha_donations', JSON.stringify(donations));
+
+            // Show success
+            document.getElementById('successModal').classList.add('active');
+
+            btn.disabled = false;
+            btn.innerHTML = '❤️ Donate ₹' + selectedAmount.toLocaleString();
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // Page Load Animations
+        window.addEventListener('load', () => {
+            // Header - slide down
+            const header = document.querySelector('.donate-header');
+            if (header) {
+                header.style.opacity = '0';
+                header.style.transform = 'translateY(-40px)';
+                setTimeout(() => {
+                    header.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    header.style.opacity = '1';
+                    header.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // Impact stats - pop in with stagger
+            const stats = document.querySelectorAll('.impact-stat');
+            stats.forEach((stat, i) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    stat.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'scale(1)';
+                }, 300 + (i * 100));
+            });
+
+            // Donate card - slide from left
+            const donateCard = document.querySelector('.donate-card');
+            if (donateCard) {
+                donateCard.style.opacity = '0';
+                donateCard.style.transform = 'translateX(-50px)';
+                setTimeout(() => {
+                    donateCard.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    donateCard.style.opacity = '1';
+                    donateCard.style.transform = 'translateX(0)';
+                }, 400);
+            }
+
+            // Allocation card - slide from right
+            const allocationCard = document.querySelector('.allocation-card');
+            if (allocationCard) {
+                allocationCard.style.opacity = '0';
+                allocationCard.style.transform = 'translateX(50px)';
+                setTimeout(() => {
+                    allocationCard.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    allocationCard.style.opacity = '1';
+                    allocationCard.style.transform = 'translateX(0)';
+                }, 500);
+            }
+
+            // Amount buttons - pop in with stagger
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            amountBtns.forEach((btn, i) => {
+                btn.style.opacity = '0';
+                btn.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    btn.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'scale(1)';
+                }, 600 + (i * 50));
+            });
+
+            // Sponsor section - slide up
+            const sponsorSection = document.querySelector('.sponsor-section');
+            if (sponsorSection) {
+                sponsorSection.style.opacity = '0';
+                sponsorSection.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    sponsorSection.style.transition = 'all 0.6s ease';
+                    sponsorSection.style.opacity = '1';
+                    sponsorSection.style.transform = 'translateY(0)';
+                }, 700);
+            }
+
+            // Allocation items - slide in with stagger
+            const allocationItems = document.querySelectorAll('.allocation-item');
+            allocationItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 600 + (i * 80));
+            });
+        });
+    </script>
+</body>
+
+</html>

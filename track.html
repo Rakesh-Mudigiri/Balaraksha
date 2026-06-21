@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Case | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .track-header {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .track-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .track-header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: -40px auto 40px;
+            position: relative;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+
+        .search-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
+        }
+
+        .search-hint {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Case Result */
+        .case-result {
+            display: none;
+        }
+
+        .case-result.active {
+            display: block;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .case-header {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .case-id {
+            font-size: 20px;
+            font-weight: 700;
+            color: #065f46;
+        }
+
+        .case-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-rescued {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-closed {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .case-body {
+            padding: 24px;
+        }
+
+        .case-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .meta-item {
+            text-align: center;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-top: 32px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            background: #e5e7eb;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #e5e7eb;
+        }
+
+        .timeline-dot.complete {
+            background: #10b981;
+            box-shadow: 0 0 0 3px #d1fae5;
+        }
+
+        .timeline-dot.current {
+            background: #3b82f6;
+            box-shadow: 0 0 0 3px #dbeafe;
+            animation: pulse-blue 2s infinite;
+        }
+
+        @keyframes pulse-blue {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px #dbeafe;
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3);
+            }
+        }
+
+        .timeline-dot.pending {
+            background: #e5e7eb;
+        }
+
+        .timeline-content {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .timeline-content.current {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .timeline-step {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-info h4 {
+            font-size: 16px;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+
+        .contact-info p {
+            font-size: 14px;
+            color: #3b82f6;
+        }
+
+        .contact-btn {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #1e40af;
+            border: 2px solid #1e40af;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 48px;
+            display: none;
+        }
+
+        .error-state.active {
+            display: block;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .error-desc {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+
+            .case-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-card {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="track-header" style="position: relative;">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="container">
+            <h1>📋 Track Your Case</h1>
+            <p>Enter your case ID to see the current status and updates</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-card">
+            <form class="search-form" onsubmit="trackCase(event)">
+                <input type="text" class="search-input" id="caseInput"
+                    placeholder="Enter Case ID (e.g., BR-2024-001234)" required>
+                <button type="submit" class="search-btn">🔍 Track Case</button>
+            </form>
+            <p class="search-hint">Your case ID was provided when you submitted the report</p>
+        </div>
+
+        <!-- Case Result -->
+        <div class="case-result" id="caseResult">
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-id" id="resultCaseId">BR-2024-001234</div>
+                    <span class="case-status status-active" id="resultStatus">🔄 In Progress</span>
+                </div>
+                <div class="case-body">
+                    <div class="case-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Reported</div>
+                            <div class="meta-value" id="reportDate">Dec 20, 2024</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Location</div>
+                            <div class="meta-value" id="reportLocation">Hyderabad</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Urgency</div>
+                            <div class="meta-value" id="reportUrgency">🔴 Critical</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-section">
+                        <h3 class="timeline-title">📅 Case Timeline</h3>
+                        <div class="timeline" id="caseTimeline">
+                            <!-- Timeline items populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-info">
+                            <h4>Need Help?</h4>
+                            <p>Contact your assigned case officer for updates</p>
+                        </div>
+                        <div class="contact-btn">
+                            <a href="tel:1098" class="btn btn-primary">📞 Call DCPU</a>
+                            <a href="mailto:support@balaraksha.gov.in" class="btn btn-outline">✉️ Email</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-state" id="errorState">
+            <div class="error-icon">❌</div>
+            <h3 class="error-title">Case Not Found</h3>
+            <p class="error-desc">We couldn't find a case with that ID. Please check and try again.</p>
+            <button class="btn btn-primary" onclick="resetSearch()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample case data
+        const sampleCases = {
+            'BR-2024-001234': {
+                id: 'BR-2024-001234',
+                status: 'in_progress',
+                reportDate: 'Dec 20, 2024',
+                location: 'Hyderabad',
+                urgency: 'Critical',
+                timeline: [
+                    { step: 'Case Reported', date: 'Dec 20, 10:30 AM', desc: 'Report submitted via mobile app', status: 'complete' },
+                    { step: 'Verified & Assigned', date: 'Dec 20, 11:15 AM', desc: 'DCPU officer assigned to case', status: 'complete' },
+                    { step: 'Rescue Team Dispatched', date: 'Dec 20, 11:45 AM', desc: 'Team deployed to location', status: 'complete' },
+                    { step: 'Child Rescued', date: 'Dec 20, 12:30 PM', desc: 'Child safely rescued and in care', status: 'current' },
+                    { step: 'Medical Checkup', date: 'Pending', desc: 'Scheduled health assessment', status: 'pending' },
+                    { step: 'Shelter Placement', date: 'Pending', desc: 'Awaiting suitable placement', status: 'pending' }
+                ]
+            },
+            'BR-2024-001200': {
+                id: 'BR-2024-001200',
+                status: 'rescued',
+                reportDate: 'Dec 15, 2024',
+                location: 'Warangal',
+                urgency: 'High',
+                timeline: [
+                    { step: 'Case Reported', date: 'Dec 15, 9:00 AM', desc: 'Report via citizen call', status: 'complete' },
+                    { step: 'Verified & Assigned', date: 'Dec 15, 9:30 AM', desc: 'DCPU verified case', status: 'complete' },
+                    { step: 'Rescue Team Dispatched', date: 'Dec 15, 10:00 AM', desc: 'Volunteer team assigned', status: 'complete' },
+                    { step: 'Child Rescued', date: 'Dec 15, 11:00 AM', desc: 'Successful rescue', status: 'complete' },
+                    { step: 'Medical Checkup', date: 'Dec 15, 2:00 PM', desc: 'Health assessment complete', status: 'complete' },
+                    { step: 'Shelter Placement', date: 'Dec 16, 10:00 AM', desc: 'Placed at Shishu Vihar', status: 'current' }
+                ]
+            }
+        };
+
+        function trackCase(e) {
+            e.preventDefault();
+            const input = document.getElementById('caseInput').value.trim().toUpperCase();
+
+            // Check localStorage first (for user-submitted cases)
+            const userCases = JSON.parse(localStorage.getItem('balaraksha_cases') || '[]');
+            const userCase = userCases.find(c => c.id === input);
+
+            // Check sample cases
+            const sampleCase = sampleCases[input];
+
+            const foundCase = userCase || sampleCase;
+
+            if (foundCase) {
+                displayCase(foundCase);
+            } else {
+                document.getElementById('caseResult').classList.remove('active');
+                document.getElementById('errorState').classList.add('active');
+            }
+        }
+
+        function displayCase(caseData) {
+            document.getElementById('errorState').classList.remove('active');
+            document.getElementById('caseResult').classList.add('active');
+
+            document.getElementById('resultCaseId').textContent = caseData.id;
+            document.getElementById('reportDate').textContent = caseData.reportDate || caseData.date || 'N/A';
+            document.getElementById('reportLocation').textContent = caseData.location || caseData.district || 'N/A';
+
+            const urgency = caseData.urgency || 'Standard';
+            const urgencyEmoji = urgency === 'Critical' ? '🔴' : urgency === 'High' ? '🟠' : '🟢';
+            document.getElementById('reportUrgency').textContent = urgencyEmoji + ' ' + urgency;
+
+            const statusEl = document.getElementById('resultStatus');
+            if (caseData.status === 'rescued' || caseData.status === 'complete') {
+                statusEl.className = 'case-status status-rescued';
+                statusEl.textContent = '✅ Rescued';
+            } else if (caseData.status === 'closed') {
+                statusEl.className = 'case-status status-closed';
+                statusEl.textContent = '📁 Closed';
+            } else {
+                statusEl.className = 'case-status status-active';
+                statusEl.textContent = '🔄 In Progress';
+            }
+
+            // Render timeline
+            const timeline = caseData.timeline || [
+                { step: 'Case Reported', date: caseData.date || 'Recently', desc: 'Your report was submitted', status: 'complete' },
+                { step: 'Under Review', date: 'Pending', desc: 'DCPU will verify the case', status: 'current' },
+                { step: 'Team Dispatch', date: 'Pending', desc: 'Rescue team to be assigned', status: 'pending' }
+            ];
+
+            document.getElementById('caseTimeline').innerHTML = timeline.map(t => `
+                <div class="timeline-item">
+                    <div class="timeline-dot ${t.status}"></div>
+                    <div class="timeline-content ${t.status === 'current' ? 'current' : ''}">
+                        <div class="timeline-header">
+                            <span class="timeline-step">${t.step}</span>
+                            <span class="timeline-date">${t.date}</span>
+                        </div>
+                        <p class="timeline-desc">${t.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetSearch() {
+            document.getElementById('caseInput').value = '';
+            document.getElementById('errorState').classList.remove('active');
+            document.getElementById('caseResult').classList.remove('active');
+        }
+
+        // Check URL params for case ID
+        const urlParams = new URLSearchParams(window.location.search);
+        const caseId = urlParams.get('id');
+        if (caseId) {
+            document.getElementById('caseInput').value = caseId;
+            trackCase(new Event('submit'));
+        }
+    </script>
+</body>
+
+</html>

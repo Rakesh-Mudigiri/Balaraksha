@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to Balaraksha - Telangana Child Welfare Platform">
+    <title>Login | బాలరక్ష - Child Welfare Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Login Page Specific Styles */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f2942 100%);
+        }
+
+        .auth-sidebar {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-sidebar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+        }
+
+        .sidebar-content {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-logo-icon {
+            font-size: 48px;
+        }
+
+        .sidebar-logo-text {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .sidebar-title {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .sidebar-description {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .auth-main {
+            flex: 1;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-size: 15px;
+            color: var(--gray-500);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            background: var(--gray-100);
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .auth-tab:hover {
+            color: var(--gray-800);
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: var(--primary-600);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-tab-icon {
+            font-size: 16px;
+        }
+
+        .auth-form-section {
+            display: none;
+        }
+
+        .auth-form-section.active {
+            display: block;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-input {
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input-group {
+            position: relative;
+        }
+
+        .form-input-group .form-input {
+            padding-left: 50px;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .otp-input {
+            width: 52px;
+            height: 56px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-auth {
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-auth-primary {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-auth-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        .btn-auth-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-auth-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .btn-auth-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .auth-divider span {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .auth-alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .auth-alert-error {
+            background: var(--danger-50);
+            color: var(--danger-600);
+            border: 1px solid #fecaca;
+        }
+
+        .auth-alert-success {
+            background: var(--success-50);
+            color: var(--success-600);
+            border: 1px solid #bbf7d0;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        .auth-footer a {
+            color: var(--primary-600);
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .otp-timer {
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 12px;
+        }
+
+        .otp-section {
+            display: none;
+        }
+
+        .otp-section.active {
+            display: block;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: var(--primary-600);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .remember-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--gray-600);
+        }
+
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-600);
+        }
+
+        .forgot-link {
+            color: var(--primary-600);
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .auth-sidebar {
+                display: none;
+            }
+
+            .auth-page {
+                background: white;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-main {
+                padding: 24px;
+            }
+
+            .auth-tabs {
+                flex-wrap: wrap;
+            }
+
+            .auth-tab {
+                min-width: calc(50% - 4px);
+            }
+
+            .otp-input {
+                width: 44px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-page">
+        <!-- Sidebar -->
+        <div class="auth-sidebar">
+            <div class="sidebar-content">
+                <a href="index.html" class="sidebar-logo">
+                    <span class="sidebar-logo-icon">🏠</span>
+                    <span class="sidebar-logo-text">బాలరక్ష</span>
+                </a>
+                <h1 class="sidebar-title">
+                    Protecting Children,<br>
+                    Building Futures
+                </h1>
+                <p class="sidebar-description">
+                    Join Telangana's comprehensive child welfare platform connecting
+                    communities, shelters, and government agencies to ensure every
+                    child has a safe place to call home.
+                </p>
+                <div class="sidebar-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚨</div>
+                        <span>Instant emergency reporting</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📍</div>
+                        <span>Real-time shelter tracking</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <span>Secure, government-compliant system</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🤝</div>
+                        <span>Volunteer coordination network</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Auth Area -->
+        <div class="auth-main">
+            <div class="auth-container">
+                <a href="index.html" class="back-link">
+                    ← Back to Home
+                </a>
+
+                <div class="auth-header">
+                    <h2 class="auth-title">Welcome Back</h2>
+                    <p class="auth-subtitle">Login to access your dashboard</p>
+                </div>
+
+                <!-- Alert Messages -->
+                <div class="auth-alert auth-alert-error" id="authError"></div>
+                <div class="auth-alert auth-alert-success" id="authSuccess"></div>
+
+                <!-- Role Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="citizen">
+                        <span class="auth-tab-icon">👤</span>
+                        Citizen
+                    </button>
+                    <button class="auth-tab" data-tab="shelter">
+                        <span class="auth-tab-icon">🏠</span>
+                        Shelter
+                    </button>
+                    <button class="auth-tab" data-tab="government">
+                        <span class="auth-tab-icon">🏛️</span>
+                        Govt
+                    </button>
+                    <button class="auth-tab" data-tab="volunteer">
+                        <span class="auth-tab-icon">🤝</span>
+                        Volunteer
+                    </button>
+                </div>
+
+                <!-- Citizen Login (OTP Based) -->
+                <div class="auth-form-section active" id="citizenSection">
+                    <div id="phoneSection">
+                        <form class="auth-form" id="citizenPhoneForm">
+                            <div class="form-group">
+                                <label class="form-label">Mobile Number</label>
+                                <div class="form-input-group">
+                                    <span class="input-prefix">+91</span>
+                                    <input type="tel" class="form-input" id="phoneNumber"
+                                        placeholder="Enter 10-digit mobile number" maxlength="10" pattern="[0-9]{10}"
+                                        required>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-auth btn-auth-primary" id="sendOtpBtn">
+                                Send OTP
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="otpSection" class="otp-section">
+                        <form class="auth-form" id="otpForm">
+                            <div class="form-group">
+                                <label class="form-label" style="text-align: center;">
+                                    Enter the 6-digit OTP sent to your mobile
+                                </label>
+                                <div class="otp-inputs">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                </div>
+                                <div class="otp-timer">
+                                    <span id="otpTimer"></span>
+                                    <button type="button" id="resendOtpBtn" class="forgot-link"
+                                        style="background: none; border: none; cursor: pointer;">
+                                        Resend OTP
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-auth btn-auth-primary">
+                                Verify OTP
+                            </button>
+                            <button type="button" class="btn-auth btn-auth-secondary" onclick="location.reload()">
+                                Change Number
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Shelter Login -->
+                <div class="auth-form-section" id="shelterSection">
+                    <form class="auth-form" id="loginForm">
+                        <input type="hidden" name="role" value="shelter">
+                        <div class="form-group">
+                            <label class="form-label">Shelter ID / Email</label>
+                            <input type="text" class="form-input" name="identifier"
+                                placeholder="Enter your shelter ID or email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" name="password" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="remember-row">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember">
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn-auth btn-auth-primary">
+                            Login to Shelter Dashboard
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Government Login -->
+                <div class="auth-form-section" id="governmentSection">
+                    <form class="auth-form" id="govLoginForm">
+                        <input type="hidden" name="role" value="government">
+                        <div class="form-group">
+                            <label class="form-label">Official Email / Employee ID</label>
+                            <input type="text" class="form-input" name="identifier"
+                                placeholder="Enter your official email or ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" name="password" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role</label>
+                            <select class="form-input" name="govRole">
+                                <option value="dcpu">DCPU Officer</option>
+                                <option value="police">Police</option>
+                                <option value="jj_board">JJ Board Member</option>
+                                <option value="health">Health Department</option>
+                                <option value="education">Education Department</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-auth btn-auth-primary">
+                            Login to Government Portal
+                        </button>
+                    </form>
+                    <p style="text-align: center; font-size: 13px; color: var(--gray-500); margin-top: 16px;">
+                        🔒 This portal is for authorized government officials only
+                    </p>
+                </div>
+
+                <!-- Volunteer Login -->
+                <div class="auth-form-section" id="volunteerSection">
+                    <form class="auth-form" id="volunteerLoginForm">
+                        <input type="hidden" name="role" value="volunteer">
+                        <div class="form-group">
+                            <label class="form-label">Phone Number / Email</label>
+                            <input type="text" class="form-input" name="identifier"
+                                placeholder="Enter your registered phone or email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" name="password" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="remember-row">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember">
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn-auth btn-auth-primary">
+                            Login to Volunteer Dashboard
+                        </button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>New volunteer?</span>
+                    </div>
+                    <a href="#register" class="btn-auth btn-auth-secondary" style="display: block; text-align: center;">
+                        Register as Volunteer
+                    </a>
+                </div>
+
+                <div class="auth-footer">
+                    <p>
+                        By continuing, you agree to our
+                        <a href="#">Terms of Service</a> and
+                        <a href="#">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Additional login page specific handling
+        document.querySelectorAll('.auth-form-section form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const role = form.querySelector('input[name="role"]')?.value || 'citizen';
+                const identifier = form.querySelector('input[name="identifier"]')?.value || 'demo@balaraksha.in';
+
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
+
+                // Simulate login
+                await new Promise(r => setTimeout(r, 1500));
+
+                // Create and save session
+                const user = {
+                    id: 'USR' + Date.now(),
+                    name: role.charAt(0).toUpperCase() + role.slice(1) + ' User',
+                    email: identifier,
+                    role: role,
+                    verified: true,
+                    avatar: role === 'citizen' ? '👤' : role === 'shelter' ? '🏠' : role === 'government' ? '🏛️' : '🤝'
+                };
+
+                const session = {
+                    user: user,
+                    token: 'demo_token_' + Date.now(),
+                    expiresAt: Date.now() + (24 * 60 * 60 * 1000)
+                };
+
+                localStorage.setItem('balaraksha_session', JSON.stringify(session));
+
+                // Show success
+                const successEl = document.getElementById('authSuccess');
+                successEl.textContent = 'Login successful! Redirecting...';
+                successEl.style.display = 'block';
+
+                // Redirect
+                setTimeout(() => {
+                    const dashboards = {
+                        citizen: 'dashboard-citizen.html',
+                        shelter: 'dashboard-shelter.html',
+                        government: 'dashboard-government.html',
+                        volunteer: 'dashboard-volunteer.html'
+                    };
+                    window.location.href = dashboards[role];
+                }, 1000);
+            });
+        });
+
+        // Premium Page Load Animations
+        window.addEventListener('load', () => {
+            // Sidebar - slide from left
+            const sidebar = document.querySelector('.auth-sidebar');
+            if (sidebar) {
+                sidebar.style.opacity = '0';
+                sidebar.style.transform = 'translateX(-40px)';
+                setTimeout(() => {
+                    sidebar.style.transition = 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+                    sidebar.style.opacity = '1';
+                    sidebar.style.transform = 'translateX(0)';
+                }, 100);
+            }
+
+            // Feature items - stagger from left
+            const features = document.querySelectorAll('.feature-item');
+            features.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 400 + (i * 100));
+            });
+
+            // Auth container - slide from right
+            const authMain = document.querySelector('.auth-main');
+            if (authMain) {
+                authMain.style.opacity = '0';
+                authMain.style.transform = 'translateX(40px)';
+                setTimeout(() => {
+                    authMain.style.transition = 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+                    authMain.style.opacity = '1';
+                    authMain.style.transform = 'translateX(0)';
+                }, 150);
+            }
+
+            // Auth header - fade in
+            const authHeader = document.querySelector('.auth-header');
+            if (authHeader) {
+                authHeader.style.opacity = '0';
+                authHeader.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    authHeader.style.transition = 'all 0.5s ease';
+                    authHeader.style.opacity = '1';
+                    authHeader.style.transform = 'translateY(0)';
+                }, 300);
+            }
+
+            // Auth tabs - pop in with stagger
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach((tab, i) => {
+                tab.style.opacity = '0';
+                tab.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    tab.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    tab.style.opacity = '1';
+                    tab.style.transform = 'scale(1)';
+                }, 400 + (i * 60));
+            });
+
+            // Form groups - slide up with stagger
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, i) => {
+                group.style.opacity = '0';
+                group.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    group.style.transition = 'all 0.4s ease';
+                    group.style.opacity = '1';
+                    group.style.transform = 'translateY(0)';
+                }, 550 + (i * 80));
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .volunteer-dash {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .dash-header {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 32px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header-left p {
+            opacity: 0.9;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .header-stat {
+            text-align: center;
+        }
+
+        .header-stat-number {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .header-stat-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .dash-main {
+            padding: 32px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            border-color: var(--primary-300);
+        }
+
+        .tab.active {
+            background: var(--primary-600);
+            border-color: var(--primary-600);
+            color: white;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-100);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 14px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            border-color: var(--primary-200);
+            background: white;
+        }
+
+        .task-urgency {
+            width: 8px;
+            height: 100%;
+            min-height: 60px;
+            border-radius: 4px;
+        }
+
+        .urgency-critical {
+            background: var(--danger-500);
+        }
+
+        .urgency-high {
+            background: var(--warning-500);
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-type {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--primary-600);
+            margin-bottom: 4px;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-bottom: 12px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-accept {
+            background: var(--success-500);
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: var(--success-600);
+        }
+
+        .btn-view {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .btn-view:hover {
+            background: var(--gray-200);
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .badge-icon {
+            font-size: 32px;
+        }
+
+        .badge-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .badge-locked {
+            opacity: 0.4;
+        }
+
+        .stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .training-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .training-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .training-info {
+            flex: 1;
+        }
+
+        .training-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .training-status {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .training-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-complete {
+            background: var(--success-100);
+            color: var(--success-700);
+        }
+
+        .badge-pending {
+            background: var(--warning-100);
+            color: var(--warning-700);
+        }
+
+        .nav-back {
+            color: white;
+            opacity: 0.9;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-stats {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="volunteer-dash">
+    <!-- Header -->
+    <header class="dash-header">
+        <div class="container">
+            <a href="index.html" class="nav-back">← Back to Home</a>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🤝 Volunteer Dashboard</h1>
+                    <p>Thank you for making a difference!</p>
+                </div>
+                <div class="header-stats">
+                    <div class="header-stat">
+                        <div class="header-stat-number">12</div>
+                        <div class="header-stat-label">Tasks Completed</div>
+                    </div>
+                    <div class="header-stat">
+                        <div class="header-stat-number">47hrs</div>
+                        <div class="header-stat-label">Hours Contributed</div>
+                    </div>
+                    <div class="header-stat">
+                        <div class="header-stat-number">8</div>
+                        <div class="header-stat-label">Children Helped</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="dash-main">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active">📋 Available Tasks</button>
+                <button class="tab">✅ My Tasks</button>
+                <button class="tab">📚 Training</button>
+                <button class="tab">🏆 Achievements</button>
+            </div>
+
+            <!-- Content -->
+            <div class="content-grid">
+                <!-- Tasks -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Available Tasks Near You</span>
+                        <span style="font-size: 13px; color: var(--gray-500);">📍 Hyderabad</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="task-list">
+                            <div class="task-item">
+                                <div class="task-urgency urgency-critical"></div>
+                                <div class="task-content">
+                                    <div class="task-type">🚗 Transport</div>
+                                    <div class="task-title">Transport child from Charminar to Shishu Vihar</div>
+                                    <div class="task-meta">
+                                        <span>📍 5.2 km away</span>
+                                        <span>⏱️ ~30 min</span>
+                                        <span>🚨 Urgent</span>
+                                    </div>
+                                    <div class="task-actions">
+                                        <button class="btn btn-accept">Accept Task</button>
+                                        <button class="btn btn-view">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-item">
+                                <div class="task-urgency urgency-high"></div>
+                                <div class="task-content">
+                                    <div class="task-type">🏥 Escort</div>
+                                    <div class="task-title">Accompany child to Gandhi Hospital for checkup</div>
+                                    <div class="task-meta">
+                                        <span>📍 3.8 km away</span>
+                                        <span>⏱️ ~2 hours</span>
+                                        <span>📅 Tomorrow 10 AM</span>
+                                    </div>
+                                    <div class="task-actions">
+                                        <button class="btn btn-accept">Accept Task</button>
+                                        <button class="btn btn-view">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-item">
+                                <div class="task-urgency" style="background: var(--primary-500);"></div>
+                                <div class="task-content">
+                                    <div class="task-type">📋 Documentation</div>
+                                    <div class="task-title">Help with JJ Board paperwork at DCPU office</div>
+                                    <div class="task-meta">
+                                        <span>📍 7.1 km away</span>
+                                        <span>⏱️ ~1 hour</span>
+                                        <span>📅 This week</span>
+                                    </div>
+                                    <div class="task-actions">
+                                        <button class="btn btn-accept">Accept Task</button>
+                                        <button class="btn btn-view">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div>
+                    <!-- Stats -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-header">
+                            <span class="card-title">Your Impact</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-list">
+                                <div class="stat-item">
+                                    <span class="stat-label">Tasks Completed</span>
+                                    <span class="stat-value">12</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Hours Contributed</span>
+                                    <span class="stat-value">47 hrs</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Children Helped</span>
+                                    <span class="stat-value">8</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Rating</span>
+                                    <span class="stat-value">⭐ 4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-header">
+                            <span class="card-title">Training Modules</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="training-item">
+                                <div class="training-icon">📚</div>
+                                <div class="training-info">
+                                    <div class="training-name">Basic Child Safety</div>
+                                    <div class="training-status">Completed on Dec 15</div>
+                                </div>
+                                <span class="training-badge badge-complete">✓ Done</span>
+                            </div>
+                            <div class="training-item">
+                                <div class="training-icon">🏥</div>
+                                <div class="training-info">
+                                    <div class="training-name">First Aid Training</div>
+                                    <div class="training-status">2 lessons remaining</div>
+                                </div>
+                                <span class="training-badge badge-pending">In Progress</span>
+                            </div>
+                            <div class="training-item">
+                                <div class="training-icon">⚖️</div>
+                                <div class="training-info">
+                                    <div class="training-name">JJ Act Overview</div>
+                                    <div class="training-status">Not started</div>
+                                </div>
+                                <span class="training-badge badge-pending">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Badges Earned</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="badge-list">
+                                <div class="badge-item">
+                                    <div class="badge-icon">🌟</div>
+                                    <span class="badge-name">First Task</span>
+                                </div>
+                                <div class="badge-item">
+                                    <div class="badge-icon">🚗</div>
+                                    <span class="badge-name">Transporter</span>
+                                </div>
+                                <div class="badge-item">
+                                    <div class="badge-icon">❤️</div>
+                                    <span class="badge-name">Helper</span>
+                                </div>
+                                <div class="badge-item badge-locked">
+                                    <div class="badge-icon">🏆</div>
+                                    <span class="badge-name">Legend</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Premium Dashboard Animations
+        window.addEventListener('load', () => {
+            // Header - slide down
+            const header = document.querySelector('.dash-header');
+            if (header) {
+                header.style.opacity = '0';
+                header.style.transform = 'translateY(-30px)';
+                setTimeout(() => {
+                    header.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    header.style.opacity = '1';
+                    header.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // Header stats - pop in with stagger
+            const headerStats = document.querySelectorAll('.header-stat');
+            headerStats.forEach((stat, i) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    stat.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'scale(1)';
+                }, 300 + (i * 100));
+            });
+
+            // Tabs - slide up with stagger
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((tab, i) => {
+                tab.style.opacity = '0';
+                tab.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    tab.style.transition = 'all 0.4s ease';
+                    tab.style.opacity = '1';
+                    tab.style.transform = 'translateY(0)';
+                }, 400 + (i * 60));
+            });
+
+            // Main task card - slide from left
+            const mainCard = document.querySelector('.content-grid > .card');
+            if (mainCard) {
+                mainCard.style.opacity = '0';
+                mainCard.style.transform = 'translateX(-30px)';
+                setTimeout(() => {
+                    mainCard.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    mainCard.style.opacity = '1';
+                    mainCard.style.transform = 'translateX(0)';
+                }, 500);
+            }
+
+            // Task items - stagger from left
+            const taskItems = document.querySelectorAll('.task-item');
+            taskItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 650 + (i * 100));
+            });
+
+            // Sidebar cards - slide from right with stagger
+            const sidebarCards = document.querySelectorAll('.content-grid > div:last-child .card');
+            sidebarCards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateX(0)';
+                }, 600 + (i * 120));
+            });
+
+            // Stat items - fade in stagger
+            const statItems = document.querySelectorAll('.stat-item');
+            statItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.4s ease';
+                    item.style.opacity = '1';
+                }, 800 + (i * 60));
+            });
+
+            // Training items - slide up stagger
+            const trainingItems = document.querySelectorAll('.training-item');
+            trainingItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 950 + (i * 80));
+            });
+
+            // Badge items - pop in with stagger
+            const badgeItems = document.querySelectorAll('.badge-item');
+            badgeItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                }, 1100 + (i * 70));
+            });
+        });
+    </script>
+</body>
+
+</html>

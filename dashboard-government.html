@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Portal | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gov-portal {
+            display: flex;
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1e3a5f, #0f172a);
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .nav-group {
+            margin-bottom: 24px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 0 16px 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: white;
+        }
+
+        .nav-badge {
+            background: var(--danger-500);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px 32px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .user-badge-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .user-badge-info span {
+            display: block;
+        }
+
+        .user-badge-name {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .user-badge-role {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .stat-box-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .stat-box-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .stat-box-label {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .panel-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .case-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .case-row:hover {
+            background: var(--gray-50);
+        }
+
+        .case-priority {
+            width: 8px;
+            height: 40px;
+            border-radius: 4px;
+        }
+
+        .priority-critical {
+            background: var(--danger-500);
+        }
+
+        .priority-high {
+            background: var(--warning-500);
+        }
+
+        .priority-medium {
+            background: var(--primary-500);
+        }
+
+        .case-details {
+            flex: 1;
+        }
+
+        .case-id {
+            font-weight: 600;
+            color: var(--gray-800);
+            font-size: 14px;
+        }
+
+        .case-info {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .case-status-tag {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-pending {
+            background: var(--warning-100);
+            color: var(--warning-700);
+        }
+
+        .tag-investigation {
+            background: var(--primary-100);
+            color: var(--primary-700);
+        }
+
+        .tag-jj-board {
+            background: var(--purple-100, #f3e8ff);
+            color: var(--purple-700, #7c3aed);
+        }
+
+        .district-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .district-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .district-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .district-count {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-600);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1400px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body class="gov-portal">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <span style="font-size: 28px;">🏛️</span>
+            <div>
+                <div class="sidebar-title">బాలరక్ష</div>
+                <div class="sidebar-subtitle">Government Portal</div>
+            </div>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <a href="#" class="nav-item active">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="#" class="nav-item">
+                <span>📋</span> All Cases
+                <span class="nav-badge">47</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span>🚨</span> Emergency
+                <span class="nav-badge" style="background: var(--danger-600);">3</span>
+            </a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Departments</div>
+            <a href="#" class="nav-item">
+                <span>👮</span> Police Cases
+            </a>
+            <a href="#" class="nav-item">
+                <span>⚖️</span> JJ Board
+            </a>
+            <a href="#" class="nav-item">
+                <span>🏥</span> Health Dept
+            </a>
+            <a href="#" class="nav-item">
+                <span>📚</span> Education
+            </a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Administration</div>
+            <a href="#" class="nav-item">
+                <span>🏠</span> Shelters
+            </a>
+            <a href="#" class="nav-item">
+                <span>📍</span> Districts
+            </a>
+            <a href="#" class="nav-item">
+                <span>📈</span> Analytics
+            </a>
+            <a href="#" class="nav-item">
+                <span>📑</span> Reports
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>DCPU Dashboard</h1>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <button class="btn btn-primary" onclick="location.href='index.html'">
+                    ← Home
+                </button>
+                <div class="user-badge">
+                    <div class="user-badge-icon">🏛️</div>
+                    <div class="user-badge-info">
+                        <span class="user-badge-name">DCPU Hyderabad</span>
+                        <span class="user-badge-role">District Officer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-box-icon" style="background: var(--danger-100);">🚨</div>
+                <div class="stat-box-number">3</div>
+                <div class="stat-box-label">Emergency Cases</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-icon" style="background: var(--warning-100);">📋</div>
+                <div class="stat-box-number">47</div>
+                <div class="stat-box-label">Active Cases</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-icon" style="background: var(--primary-100);">⚖️</div>
+                <div class="stat-box-number">12</div>
+                <div class="stat-box-label">JJ Board Pending</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-icon" style="background: var(--success-50);">✅</div>
+                <div class="stat-box-number">189</div>
+                <div class="stat-box-label">Resolved (YTD)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-icon" style="background: var(--gray-100);">🏠</div>
+                <div class="stat-box-number">23</div>
+                <div class="stat-box-label">District Shelters</div>
+            </div>
+        </div>
+
+        <!-- 🎯 MATCH ALERTS - Missing Child Matches (NEW) -->
+        <div class="panel" style="margin-bottom: 24px; border: 2px solid #22c55e; display: none;" id="matchAlertsPanel">
+            <div class="panel-header" style="background: linear-gradient(135deg, #dcfce7, #bbf7d0);">
+                <span class="panel-title" style="color: #166534;">🎯 Missing Child Match Alerts</span>
+                <span
+                    style="font-size: 13px; color: #166534; font-weight: 600; background: #22c55e; color: white; padding: 4px 12px; border-radius: 10px;"
+                    id="matchAlertCount">0 matches</span>
+            </div>
+            <div class="panel-body" id="matchAlertsBody">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-grid">
+            <!-- Priority Cases -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">🚨 Priority Cases</span>
+                    <button class="btn btn-sm btn-primary">View All</button>
+                </div>
+                <div class="panel-body">
+                    <div class="case-row">
+                        <div class="case-priority priority-critical"></div>
+                        <div class="case-details">
+                            <div class="case-id">CASE-2024-001247</div>
+                            <div class="case-info">Charminar Area • Reported 2 hrs ago</div>
+                        </div>
+                        <span class="case-status-tag tag-pending">Pending Rescue</span>
+                    </div>
+                    <div class="case-row">
+                        <div class="case-priority priority-critical"></div>
+                        <div class="case-details">
+                            <div class="case-id">CASE-2024-001246</div>
+                            <div class="case-info">Secunderabad Station • Reported 4 hrs ago</div>
+                        </div>
+                        <span class="case-status-tag tag-investigation">Investigation</span>
+                    </div>
+                    <div class="case-row">
+                        <div class="case-priority priority-high"></div>
+                        <div class="case-details">
+                            <div class="case-id">CASE-2024-001240</div>
+                            <div class="case-info">Kukatpally • JJ Board hearing tomorrow</div>
+                        </div>
+                        <span class="case-status-tag tag-jj-board">JJ Board</span>
+                    </div>
+                    <div class="case-row">
+                        <div class="case-priority priority-medium"></div>
+                        <div class="case-details">
+                            <div class="case-id">CASE-2024-001235</div>
+                            <div class="case-info">LB Nagar • Family tracing in progress</div>
+                        </div>
+                        <span class="case-status-tag tag-investigation">Tracing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- District Overview -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">📍 District Overview</span>
+                </div>
+                <div class="panel-body">
+                    <div class="district-list">
+                        <div class="district-item">
+                            <span class="district-name">Hyderabad</span>
+                            <span class="district-count">18 cases</span>
+                        </div>
+                        <div class="district-item">
+                            <span class="district-name">Rangareddy</span>
+                            <span class="district-count">12 cases</span>
+                        </div>
+                        <div class="district-item">
+                            <span class="district-name">Medchal</span>
+                            <span class="district-count">8 cases</span>
+                        </div>
+                        <div class="district-item">
+                            <span class="district-name">Warangal</span>
+                            <span class="district-count">5 cases</span>
+                        </div>
+                        <div class="district-item">
+                            <span class="district-name">Karimnagar</span>
+                            <span class="district-count">4 cases</span>
+                        </div>
+                        <div class="district-item">
+                            <span class="district-name">Other Districts</span>
+                            <span class="district-count">0 cases</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load match alerts on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMatchAlerts();
+        });
+
+        function loadMatchAlerts() {
+            const panel = document.getElementById('matchAlertsPanel');
+            const body = document.getElementById('matchAlertsBody');
+            const countEl = document.getElementById('matchAlertCount');
+
+            const matches = JSON.parse(localStorage.getItem('balaraksha_shelter_matches') || '[]')
+                .filter(m => m.status === 'pending_review');
+
+            if (matches.length === 0) {
+                panel.style.display = 'none';
+                return;
+            }
+
+            panel.style.display = 'block';
+            countEl.textContent = matches.length + ' match' + (matches.length > 1 ? 'es' : '');
+
+            body.innerHTML = matches.map(match => {
+                const missing = match.missingChild;
+                const found = match.foundChild;
+                const score = match.matchScore;
+                const scoreColor = score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#6b7280';
+
+                return `
+                    <div style="display: flex; gap: 16px; padding: 16px; background: #f0fdf4; border-radius: 12px; margin-bottom: 12px; border: 1px solid #bbf7d0;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <span style="background: ${scoreColor}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 700;">
+                                    ${score}% Match
+                                </span>
+                                <span style="font-size: 12px; color: #6b7280;">${match.confidence} Confidence</span>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <div style="font-size: 11px; color: #7c3aed; font-weight: 600; margin-bottom: 4px;">MISSING CHILD</div>
+                                    <div style="font-weight: 600;">${missing.childName || 'Unknown'}</div>
+                                    <div style="font-size: 13px; color: #6b7280;">${missing.childAge || 'Age unknown'} • ${missing.childGender === 'male' ? 'Boy' : 'Girl'}</div>
+                                    <div style="font-size: 12px; color: #6b7280;">📍 ${missing.district}</div>
+                                </div>
+                                <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <div style="font-size: 11px; color: #d97706; font-weight: 600; margin-bottom: 4px;">FOUND CHILD</div>
+                                    <div style="font-weight: 600;">${found.id}</div>
+                                    <div style="font-size: 13px; color: #6b7280;">${found.age || 'Age unknown'} • ${found.gender === 'male' ? 'Boy' : 'Girl'}</div>
+                                    <div style="font-size: 12px; color: #6b7280;">📍 ${found.district}</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #ecfdf5; padding: 10px 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 14px;">📞</span>
+                                <div>
+                                    <div style="font-size: 12px; color: #166534; font-weight: 600;">Parent/Guardian: ${missing.parentName || 'Unknown'}</div>
+                                    <div style="font-size: 13px; color: #15803d;">${missing.phoneNumber || 'No phone'} ${missing.email ? '• ' + missing.email : ''}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 8px; min-width: 130px;">
+                            <button onclick="verifyMatch('${match.id}')" style="background: #22c55e; color: white; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 13px;">
+                                ✓ Verify Match
+                            </button>
+                            <button onclick="dismissMatch('${match.id}')" style="background: #f3f4f6; color: #374151; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; font-size: 13px;">
+                                ✕ NotaMatch
+                            </button>
+                            <button onclick="callParent('${missing.phoneNumber}')" style="background: #7c3aed; color: white; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 13px;">
+                                📞 Call Parent
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function verifyMatch(matchId) {
+            const matches = JSON.parse(localStorage.getItem('balaraksha_shelter_matches') || '[]');
+            const idx = matches.findIndex(m => m.id === matchId);
+            if (idx !== -1) {
+                matches[idx].status = 'confirmed';
+                matches[idx].confirmedBy = 'DCPU';
+                matches[idx].confirmedAt = new Date().toISOString();
+                localStorage.setItem('balaraksha_shelter_matches', JSON.stringify(matches));
+
+                // Update missing child status
+                const missingChildren = JSON.parse(localStorage.getItem('balaraksha_missing_children') || '[]');
+                const mcIdx = missingChildren.findIndex(c => c.id === matches[idx].missingChild.id);
+                if (mcIdx !== -1) {
+                    missingChildren[mcIdx].status = 'found';
+                    localStorage.setItem('balaraksha_missing_children', JSON.stringify(missingChildren));
+                }
+
+                alert('✅ Match verified! Family reunification process initiated. Parent has been notified.');
+                loadMatchAlerts();
+            }
+        }
+
+        function dismissMatch(matchId) {
+            const matches = JSON.parse(localStorage.getItem('balaraksha_shelter_matches') || '[]');
+            const idx = matches.findIndex(m => m.id === matchId);
+            if (idx !== -1) {
+                matches[idx].status = 'dismissed';
+                matches[idx].dismissedBy = 'DCPU';
+                localStorage.setItem('balaraksha_shelter_matches', JSON.stringify(matches));
+                loadMatchAlerts();
+            }
+        }
+
+        function callParent(phone) {
+            if (phone) {
+                window.open('tel:' + phone);
+            } else {
+                alert('No phone number available');
+            }
+        }
+
+        // Premium Dashboard Animations
+        window.addEventListener('load', () => {
+            // Sidebar - slide from left
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.style.opacity = '0';
+                sidebar.style.transform = 'translateX(-30px)';
+                setTimeout(() => {
+                    sidebar.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    sidebar.style.opacity = '1';
+                    sidebar.style.transform = 'translateX(0)';
+                }, 100);
+            }
+
+            // Nav items - stagger
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-15px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 250 + (i * 40));
+            });
+
+            // Main content fade
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.style.opacity = '0';
+                setTimeout(() => {
+                    mainContent.style.transition = 'opacity 0.5s ease';
+                    mainContent.style.opacity = '1';
+                }, 150);
+            }
+
+            // Top bar - slide down
+            const topBar = document.querySelector('.top-bar');
+            if (topBar) {
+                topBar.style.opacity = '0';
+                topBar.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    topBar.style.transition = 'all 0.5s ease';
+                    topBar.style.opacity = '1';
+                    topBar.style.transform = 'translateY(0)';
+                }, 200);
+            }
+
+            // Stats boxes - pop in with stagger
+            const statBoxes = document.querySelectorAll('.stat-box');
+            statBoxes.forEach((box, i) => {
+                box.style.opacity = '0';
+                box.style.transform = 'translateY(20px) scale(0.95)';
+                setTimeout(() => {
+                    box.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    box.style.opacity = '1';
+                    box.style.transform = 'translateY(0) scale(1)';
+                }, 350 + (i * 80));
+            });
+
+            // Panels - left slides from left, right slides from right
+            const panels = document.querySelectorAll('.panel');
+            if (panels[0]) {
+                panels[0].style.opacity = '0';
+                panels[0].style.transform = 'translateX(-30px)';
+                setTimeout(() => {
+                    panels[0].style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    panels[0].style.opacity = '1';
+                    panels[0].style.transform = 'translateX(0)';
+                }, 700);
+            }
+            if (panels[1]) {
+                panels[1].style.opacity = '0';
+                panels[1].style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    panels[1].style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    panels[1].style.opacity = '1';
+                    panels[1].style.transform = 'translateX(0)';
+                }, 750);
+            }
+
+            // Case rows - stagger from left
+            const caseRows = document.querySelectorAll('.case-row');
+            caseRows.forEach((row, i) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    row.style.transition = 'all 0.4s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateX(0)';
+                }, 850 + (i * 70));
+            });
+
+            // District items - stagger
+            const districtItems = document.querySelectorAll('.district-item');
+            districtItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 900 + (i * 50));
+            });
+        });
+    </script>
+</body>
+
+</html>

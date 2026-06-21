@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Shelters | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .shelter-finder {
+            min-height: 100vh;
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Header */
+        .finder-header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #0ea5e9 100%);
+            color: white;
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .emergency-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #dc2626;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .header-info h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header-info p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .header-stat {
+            text-align: center;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+        }
+
+        .header-stat-number {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .header-stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 10px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip:hover {
+            border-color: #3b82f6;
+        }
+
+        .filter-chip.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .filter-chip select {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding-right: 20px;
+        }
+
+        .filter-chip select:focus {
+            outline: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            min-height: calc(100vh - 250px);
+        }
+
+        /* Shelter List */
+        .shelter-list {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(100vh - 250px);
+        }
+
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-count {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .results-count strong {
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .shelter-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .shelter-card {
+            background: white;
+            border-radius: 16px;
+            border: 2px solid #e5e7eb;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .shelter-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+            transform: translateX(4px);
+        }
+
+        .shelter-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .shelter-thumb {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .shelter-content {
+            padding: 16px 20px;
+        }
+
+        .shelter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .shelter-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .shelter-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-verified {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-available {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .shelter-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .shelter-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .capacity-mini {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .capacity-mini-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        .fill-high {
+            background: #10b981;
+        }
+
+        .fill-medium {
+            background: #f59e0b;
+        }
+
+        .fill-low {
+            background: #ef4444;
+        }
+
+        .shelter-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            background: #f3f4f6;
+            color: #4b5563;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Map Panel */
+        .map-panel {
+            background: #1f2937;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-header {
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .map-header-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(180deg, #1a365d 0%, #1e3a5f 50%, #0f172a 100%);
+            overflow: hidden;
+        }
+
+        /* Telangana Map Outline */
+        .telangana-outline {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: #3b82f6;
+            border: 3px solid white;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-marker::after {
+            content: '🏠';
+            transform: rotate(45deg);
+            font-size: 14px;
+        }
+
+        .map-marker:hover {
+            transform: rotate(-45deg) scale(1.2);
+            background: #2563eb;
+        }
+
+        .map-marker.selected {
+            background: #10b981;
+            transform: rotate(-45deg) scale(1.3);
+        }
+
+        .marker-hyderabad {
+            top: 45%;
+            left: 40%;
+        }
+
+        .marker-warangal {
+            top: 30%;
+            left: 70%;
+        }
+
+        .marker-karimnagar {
+            top: 20%;
+            left: 55%;
+        }
+
+        .marker-nizamabad {
+            top: 15%;
+            left: 35%;
+        }
+
+        .marker-khammam {
+            top: 55%;
+            left: 80%;
+        }
+
+        .marker-rangareddy {
+            top: 55%;
+            left: 35%;
+        }
+
+        .marker-medchal {
+            top: 38%;
+            left: 45%;
+        }
+
+        .marker-mahabubnagar {
+            top: 70%;
+            left: 30%;
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .legend-title {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.high {
+            background: #10b981;
+        }
+
+        .legend-dot.medium {
+            background: #f59e0b;
+        }
+
+        .legend-dot.low {
+            background: #ef4444;
+        }
+
+        /* Selected Shelter Detail */
+        .shelter-detail {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .shelter-detail.active {
+            display: block;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .detail-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .detail-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .detail-stat {
+            text-align: center;
+        }
+
+        .detail-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .detail-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .detail-btn-primary {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+        }
+
+        .detail-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Floating SOS */
+        .sos-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            animation: sos-pulse 2s infinite;
+            z-index: 1000;
+        }
+
+        @keyframes sos-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 32px rgba(220, 38, 38, 0.6);
+            }
+        }
+
+        .sos-float span {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .map-panel {
+                height: 300px;
+                order: -1;
+            }
+
+            .header-stats {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-main {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .shelter-card {
+                grid-template-columns: 1fr;
+            }
+
+            .shelter-thumb {
+                height: 100px;
+            }
+
+            .filter-chips {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="shelter-finder">
+    <!-- Header -->
+    <header class="finder-header">
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="back-btn">← Back to Home</a>
+                <a href="tel:1098" class="emergency-btn">🚨 Emergency: 1098</a>
+            </div>
+            <div class="header-main">
+                <div class="header-info">
+                    <h1>🏠 Find Verified Shelters</h1>
+                    <p>156+ government-verified shelters across all 33 districts of Telangana</p>
+                </div>
+                <div class="header-stats">
+                    <div class="header-stat">
+                        <div class="header-stat-number">156</div>
+                        <div class="header-stat-label">Total Shelters</div>
+                    </div>
+                    <div class="header-stat">
+                        <div class="header-stat-number">2,340</div>
+                        <div class="header-stat-label">Available Beds</div>
+                    </div>
+                    <div class="header-stat">
+                        <div class="header-stat-number">33</div>
+                        <div class="header-stat-label">Districts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by shelter name, district, or type...">
+                </div>
+                <div class="filter-chips">
+                    <div class="filter-chip">
+                        📍 <select id="districtFilter">
+                            <option value="">All Districts</option>
+                        </select>
+                    </div>
+                    <button class="filter-chip" data-filter="available" onclick="toggleFilter(this)">
+                        🛏️ Available Beds
+                    </button>
+                    <button class="filter-chip" data-filter="verified" onclick="toggleFilter(this)">
+                        ✓ Govt Verified
+                    </button>
+                    <button class="filter-chip" data-filter="girls" onclick="toggleFilter(this)">
+                        👧 Girls Only
+                    </button>
+                    <button class="filter-chip" data-filter="boys" onclick="toggleFilter(this)">
+                        👦 Boys Only
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Shelter List -->
+        <div class="shelter-list">
+            <div class="results-info">
+                <div class="results-count">
+                    Found <strong id="resultCount">8</strong> shelters
+                </div>
+                <select class="sort-select" id="sortSelect" onchange="sortShelters()">
+                    <option value="name">Sort by Name</option>
+                    <option value="available">Most Available</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="capacity">Largest Capacity</option>
+                </select>
+            </div>
+            <div class="shelter-grid" id="shelterGrid">
+                <!-- Shelters populated by JS -->
+            </div>
+        </div>
+
+        <!-- Map Panel -->
+        <div class="map-panel">
+            <div class="map-header">
+                <div class="map-header-title">📍 Telangana Shelter Map</div>
+            </div>
+            <div class="map-container">
+                <div class="telangana-outline">
+                    <div class="map-marker marker-hyderabad" data-district="Hyderabad"
+                        onclick="zoomDistrict('Hyderabad')"></div>
+                    <div class="map-marker marker-warangal" data-district="Warangal" onclick="zoomDistrict('Warangal')">
+                    </div>
+                    <div class="map-marker marker-karimnagar" data-district="Karimnagar"
+                        onclick="zoomDistrict('Karimnagar')"></div>
+                    <div class="map-marker marker-nizamabad" data-district="Nizamabad"
+                        onclick="zoomDistrict('Nizamabad')"></div>
+                    <div class="map-marker marker-khammam" data-district="Khammam" onclick="zoomDistrict('Khammam')">
+                    </div>
+                    <div class="map-marker marker-rangareddy" data-district="Rangareddy"
+                        onclick="zoomDistrict('Rangareddy')"></div>
+                    <div class="map-marker marker-medchal" data-district="Medchal-Malkajgiri"
+                        onclick="zoomDistrict('Medchal-Malkajgiri')"></div>
+                    <div class="map-marker marker-mahabubnagar" data-district="Mahabubnagar"
+                        onclick="zoomDistrict('Mahabubnagar')"></div>
+                </div>
+
+                <div class="map-legend">
+                    <div class="legend-title">Bed Availability</div>
+                    <div class="legend-item">
+                        <span class="legend-dot high"></span> High (>50%)
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot medium"></span> Medium (20-50%)
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot low"></span> Limited (<20%) </div>
+                    </div>
+
+                    <div class="shelter-detail" id="shelterDetail">
+                        <div class="detail-header">
+                            <div class="detail-name" id="detailName">Shelter Name</div>
+                            <button class="detail-close" onclick="closeDetail()">×</button>
+                        </div>
+                        <div class="shelter-location" id="detailLocation">
+                            📍 District
+                        </div>
+                        <div class="detail-stats">
+                            <div class="detail-stat">
+                                <div class="detail-stat-value" id="detailCapacity">100</div>
+                                <div class="detail-stat-label">Capacity</div>
+                            </div>
+                            <div class="detail-stat">
+                                <div class="detail-stat-value" id="detailAvailable" style="color: #10b981;">35</div>
+                                <div class="detail-stat-label">Available</div>
+                            </div>
+                            <div class="detail-stat">
+                                <div class="detail-stat-value" id="detailRating">⭐ 4.8</div>
+                                <div class="detail-stat-label">Rating</div>
+                            </div>
+                        </div>
+                        <div class="detail-actions">
+                            <a href="tel:+919876543210" class="detail-btn detail-btn-primary">📞 Call Now</a>
+                            <button class="detail-btn detail-btn-secondary">📍 Directions</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating SOS Button -->
+        <a href="tel:1098" class="sos-float">
+            🆘
+        </a>
+
+        <script src="data.js"></script>
+        <script>
+            let allShelters = [];
+            let activeFilters = [];
+
+            document.addEventListener('DOMContentLoaded', () => {
+                populateDistricts();
+                loadShelters();
+            });
+
+            function populateDistricts() {
+                const select = document.getElementById('districtFilter');
+                if (window.appData && window.appData.districts) {
+                    window.appData.districts.forEach(d => {
+                        const option = document.createElement('option');
+                        option.value = d.name;
+                        option.textContent = d.name;
+                        select.appendChild(option);
+                    });
+                }
+            }
+
+            function loadShelters() {
+                allShelters = window.appData ? window.appData.shelters : [];
+                renderShelters(allShelters);
+            }
+
+            function renderShelters(shelters) {
+                const grid = document.getElementById('shelterGrid');
+                document.getElementById('resultCount').textContent = shelters.length;
+
+                if (shelters.length === 0) {
+                    grid.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #6b7280;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
+                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">No shelters found</div>
+                        <div>Try adjusting your search or filters</div>
+                    </div>
+                `;
+                    return;
+                }
+
+                grid.innerHTML = shelters.map((s, index) => {
+                    const available = s.capacity - s.currentOccupancy;
+                    const occupancy = (s.currentOccupancy / s.capacity) * 100;
+                    let fillClass = 'fill-high';
+                    if (occupancy > 80) fillClass = 'fill-low';
+                    else if (occupancy > 50) fillClass = 'fill-medium';
+
+                    return `
+                    <div class="shelter-card" onclick="selectShelter(${index})">
+                        <div class="shelter-thumb">🏠</div>
+                        <div class="shelter-content">
+                            <div class="shelter-header">
+                                <div class="shelter-name">${s.name}</div>
+                                ${s.govtApproved ? '<span class="shelter-badge badge-verified">✓ Verified</span>' : ''}
+                            </div>
+                            <div class="shelter-location">📍 ${s.district}</div>
+                            <div class="shelter-meta">
+                                <div class="meta-item">
+                                    🛏️ <span class="meta-value">${s.capacity}</span> beds
+                                </div>
+                                <div class="meta-item" style="color: #10b981;">
+                                    ✓ <span class="meta-value">${available}</span> available
+                                </div>
+                                <div class="meta-item">
+                                    ⭐ <span class="meta-value">${s.rating}</span>
+                                </div>
+                            </div>
+                            <div class="capacity-mini">
+                                <div class="capacity-mini-fill ${fillClass}" style="width: ${occupancy}%;"></div>
+                            </div>
+                            <div class="shelter-tags">
+                                ${s.specializations.slice(0, 3).map(sp =>
+                        `<span class="tag">${sp.replace(/_/g, ' ')}</span>`
+                    ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                }).join('');
+            }
+
+            function selectShelter(index) {
+                const s = allShelters[index];
+                const available = s.capacity - s.currentOccupancy;
+
+                document.querySelectorAll('.shelter-card').forEach((card, i) => {
+                    card.classList.toggle('selected', i === index);
+                });
+
+                document.getElementById('detailName').textContent = s.name;
+                document.getElementById('detailLocation').textContent = '📍 ' + s.district;
+                document.getElementById('detailCapacity').textContent = s.capacity;
+                document.getElementById('detailAvailable').textContent = available;
+                document.getElementById('detailRating').textContent = '⭐ ' + s.rating;
+                document.getElementById('shelterDetail').classList.add('active');
+            }
+
+            function closeDetail() {
+                document.getElementById('shelterDetail').classList.remove('active');
+                document.querySelectorAll('.shelter-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            }
+
+            function zoomDistrict(district) {
+                document.getElementById('districtFilter').value = district;
+                filterShelters();
+
+                document.querySelectorAll('.map-marker').forEach(m => {
+                    m.classList.toggle('selected', m.dataset.district === district);
+                });
+            }
+
+            function toggleFilter(btn) {
+                btn.classList.toggle('active');
+                filterShelters();
+            }
+
+            function filterShelters() {
+                const query = document.getElementById('searchInput').value.toLowerCase();
+                const district = document.getElementById('districtFilter').value;
+                const filters = [...document.querySelectorAll('.filter-chip.active')].map(f => f.dataset.filter);
+
+                let filtered = allShelters;
+
+                if (query) {
+                    filtered = filtered.filter(s =>
+                        s.name.toLowerCase().includes(query) ||
+                        s.district.toLowerCase().includes(query) ||
+                        s.type.toLowerCase().includes(query)
+                    );
+                }
+
+                if (district) {
+                    filtered = filtered.filter(s => s.district === district);
+                }
+
+                if (filters.includes('available')) {
+                    filtered = filtered.filter(s => s.capacity - s.currentOccupancy > 0);
+                }
+
+                if (filters.includes('verified')) {
+                    filtered = filtered.filter(s => s.govtApproved);
+                }
+
+                renderShelters(filtered);
+            }
+
+            function sortShelters() {
+                const sortBy = document.getElementById('sortSelect').value;
+                let sorted = [...allShelters];
+
+                switch (sortBy) {
+                    case 'available':
+                        sorted.sort((a, b) => (b.capacity - b.currentOccupancy) - (a.capacity - a.currentOccupancy));
+                        break;
+                    case 'rating':
+                        sorted.sort((a, b) => b.rating - a.rating);
+                        break;
+                    case 'capacity':
+                        sorted.sort((a, b) => b.capacity - a.capacity);
+                        break;
+                    default:
+                        sorted.sort((a, b) => a.name.localeCompare(b.name));
+                }
+
+                renderShelters(sorted);
+            }
+
+            // Event listeners
+            document.getElementById('searchInput').addEventListener('input', filterShelters);
+            document.getElementById('districtFilter').addEventListener('change', filterShelters);
+
+            // Page Load Animations - Stagger elements to prevent collision
+            function initPageAnimations() {
+                // Header animations - slide down
+                const header = document.querySelector('.finder-header');
+                if (header) {
+                    header.style.opacity = '0';
+                    header.style.transform = 'translateY(-30px)';
+                    setTimeout(() => {
+                        header.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        header.style.opacity = '1';
+                        header.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+
+                // Search section - slide from left
+                const searchSection = document.querySelector('.search-section');
+                if (searchSection) {
+                    searchSection.style.opacity = '0';
+                    searchSection.style.transform = 'translateX(-40px)';
+                    setTimeout(() => {
+                        searchSection.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        searchSection.style.opacity = '1';
+                        searchSection.style.transform = 'translateX(0)';
+                    }, 300);
+                }
+
+                // Stats cards - pop in with stagger
+                const stats = document.querySelectorAll('.header-stat');
+                stats.forEach((stat, i) => {
+                    stat.style.opacity = '0';
+                    stat.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        stat.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        stat.style.opacity = '1';
+                        stat.style.transform = 'scale(1)';
+                    }, 400 + (i * 100));
+                });
+
+                // Map panel - slide from right
+                const mapPanel = document.querySelector('.map-panel');
+                if (mapPanel) {
+                    mapPanel.style.opacity = '0';
+                    mapPanel.style.transform = 'translateX(60px)';
+                    setTimeout(() => {
+                        mapPanel.style.transition = 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        mapPanel.style.opacity = '1';
+                        mapPanel.style.transform = 'translateX(0)';
+                    }, 400);
+                }
+
+                // Map markers - pop in with stagger
+                const markers = document.querySelectorAll('.map-marker');
+                markers.forEach((marker, i) => {
+                    marker.style.opacity = '0';
+                    marker.style.transform = 'rotate(-45deg) scale(0)';
+                    setTimeout(() => {
+                        marker.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        marker.style.opacity = '1';
+                        marker.style.transform = 'rotate(-45deg) scale(1)';
+                    }, 700 + (i * 80));
+                });
+
+                // Filter chips - slide up with stagger
+                const chips = document.querySelectorAll('.filter-chip');
+                chips.forEach((chip, i) => {
+                    chip.style.opacity = '0';
+                    chip.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        chip.style.transition = 'all 0.4s ease';
+                        chip.style.opacity = '1';
+                        chip.style.transform = 'translateY(0)';
+                    }, 500 + (i * 60));
+                });
+            }
+
+            // Animate shelter cards when they render
+            function animateShelterCards() {
+                const cards = document.querySelectorAll('.shelter-card');
+                cards.forEach((card, i) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(-30px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateX(0)';
+                    }, 100 + (i * 80));
+                });
+            }
+
+            // Override renderShelters to add animations
+            const originalRenderShelters = renderShelters;
+            renderShelters = function (shelters) {
+                originalRenderShelters(shelters);
+                requestAnimationFrame(animateShelterCards);
+            };
+
+            // Initialize
+            window.addEventListener('load', () => {
+                initPageAnimations();
+                setTimeout(animateShelterCards, 500);
+            });
+        </script>
+</body>
+
+</html>

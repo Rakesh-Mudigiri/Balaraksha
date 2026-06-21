@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Missing Child | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .report-page {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .report-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .report-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .report-container {
+            max-width: 800px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .steps-indicator {
+            display: flex;
+            background: var(--gray-50);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .step.active,
+        .step.completed {
+            opacity: 1;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .step.active .step-number {
+            background: #7c3aed;
+        }
+
+        .step.completed .step-number {
+            background: var(--success-500);
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .step-connector {
+            flex: 0.5;
+            height: 2px;
+            background: var(--gray-300);
+            margin: 0 8px;
+        }
+
+        .step-connector.active {
+            background: #7c3aed;
+        }
+
+        .form-section {
+            padding: 32px;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--gray-50);
+        }
+
+        .upload-area:hover {
+            border-color: #7c3aed;
+            background: #f5f3ff;
+        }
+
+        .upload-area.has-files {
+            border-style: solid;
+            border-color: var(--success-500);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .file-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: var(--gray-200);
+            border: 3px solid #7c3aed;
+        }
+
+        .file-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: #7c3aed;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+
+        .success-section {
+            text-align: center;
+            padding: 60px 32px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #f5f3ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .case-id {
+            background: #f5f3ff;
+            padding: 16px 24px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 32px;
+        }
+
+        .case-id-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 4px;
+        }
+
+        .case-id-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+
+        .ai-info-card {
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border: 1px solid #ddd6fe;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .ai-info-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #7c3aed;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .ai-info-card p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .help-notice {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .help-notice-icon {
+            font-size: 24px;
+        }
+
+        .help-notice-text {
+            font-size: 14px;
+            color: #92400e;
+        }
+
+        .help-notice-text strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .matching-alert {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .matching-alert.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .matching-alert h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #166534;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .matching-alert p {
+            color: #15803d;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .report-header {
+                padding: 100px 20px 80px;
+            }
+
+            .report-header h1 {
+                font-size: 28px;
+            }
+
+            .steps-indicator {
+                overflow-x: auto;
+                padding: 16px;
+            }
+
+            .step-label {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                gap: 12px;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="report-page">
+    <!-- Header -->
+    <header class="report-header">
+        <div class="container">
+            <a href="index.html"
+                style="color: white; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; opacity: 0.9;">
+                ← Back to Home
+            </a>
+            <h1>💜 Report Missing Child</h1>
+            <p>Help us find your child - we're here to support you</p>
+        </div>
+    </header>
+
+    <div class="report-container">
+        <!-- Help Notice -->
+        <div class="help-notice" style="margin-top: 20px;">
+            <span class="help-notice-icon">💡</span>
+            <div class="help-notice-text">
+                <strong>AI-Powered Matching</strong>
+                Upload clear photos of your child. Our system will automatically match them against found child reports
+                and notify you immediately if there's a potential match.
+            </div>
+        </div>
+
+        <div class="report-card">
+            <!-- Progress Steps -->
+            <div class="steps-indicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <span class="step-label">Child Info</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <span class="step-label">Photos</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <span class="step-label">Last Seen</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <span class="step-label">Contact</span>
+                </div>
+            </div>
+
+            <form id="missingChildForm">
+                <!-- Step 1: Child Information -->
+                <div class="form-section active" id="section1">
+                    <h3 class="section-title">Tell us about your child</h3>
+                    <p class="section-subtitle">Provide as much detail as possible to help us find them</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Child's Full Name *</label>
+                            <input type="text" class="form-input" id="childName" placeholder="Enter child's name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Age</label>
+                            <select class="form-select" id="childAge">
+                                <option value="">Select Age</option>
+                                <option value="0-2">Infant (0-2 years)</option>
+                                <option value="3-5">Toddler (3-5 years)</option>
+                                <option value="6-10">Child (6-10 years)</option>
+                                <option value="11-14">Pre-teen (11-14 years)</option>
+                                <option value="15-18">Teenager (15-18 years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Gender *</label>
+                            <select class="form-select" id="childGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Boy</option>
+                                <option value="female">Girl</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Height (approx)</label>
+                            <input type="text" class="form-input" id="childHeight" placeholder="e.g., 4 feet 2 inches">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Physical Description *</label>
+                            <textarea class="form-textarea" id="physicalDescription"
+                                placeholder="Describe your child's appearance (hair color, eye color, skin tone, build, etc.)"
+                                required></textarea>
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Distinguishing Marks/Features</label>
+                            <input type="text" class="form-input" id="distinguishingMarks"
+                                placeholder="e.g., birthmark on left cheek, scar on forehead, mole near eye">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div></div>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Photos -->
+                <div class="form-section" id="section2">
+                    <h3 class="section-title">Upload Photos of Your Child</h3>
+                    <p class="section-subtitle">Clear, recent photos help our AI matching system work better</p>
+
+                    <div class="ai-info-card">
+                        <h4>🤖 AI Photo Matching</h4>
+                        <p>Our system uses advanced AI to analyze facial features and compare with found child reports.
+                            Upload multiple photos from different angles for better matching accuracy.</p>
+                    </div>
+
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Click to upload photos of your child</div>
+                        <div class="upload-hint">Recent photos work best. Max 5 images, each up to 10MB.</div>
+                        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+                    </div>
+                    <div class="file-preview" id="filePreview"></div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)">
+                            ← Back
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Last Seen Information -->
+                <div class="form-section" id="section3">
+                    <h3 class="section-title">Where was your child last seen?</h3>
+                    <p class="section-subtitle">This helps us narrow down the search area</p>
+
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label">Last Seen Location *</label>
+                            <input type="text" class="form-input" id="lastSeenLocation"
+                                placeholder="e.g., KPHB Colony, Kukatpally" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">District *</label>
+                            <select class="form-select" id="district" required>
+                                <option value="">Select District</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date Missing *</label>
+                            <input type="date" class="form-input" id="dateMissing" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Time Last Seen</label>
+                            <input type="time" class="form-input" id="timeMissing">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Seen Wearing</label>
+                            <input type="text" class="form-input" id="lastSeenWearing"
+                                placeholder="e.g., Blue school uniform, white shoes">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Additional Details</label>
+                            <textarea class="form-textarea" id="additionalDetails"
+                                placeholder="Any other information that might help (was with someone, circumstances, etc.)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
+                            ← Back
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Contact Information -->
+                <div class="form-section" id="section4">
+                    <h3 class="section-title">Your Contact Information</h3>
+                    <p class="section-subtitle">We'll notify you immediately if we find a match</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Your Full Name *</label>
+                            <input type="text" class="form-input" id="parentName" placeholder="Enter your name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Relationship to Child *</label>
+                            <select class="form-select" id="relationship" required>
+                                <option value="">Select Relationship</option>
+                                <option value="mother">Mother</option>
+                                <option value="father">Father</option>
+                                <option value="guardian">Legal Guardian</option>
+                                <option value="grandparent">Grandparent</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="other">Other Relative</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-input" id="phoneNumber" placeholder="e.g., 9876543210"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Alternate Phone</label>
+                            <input type="tel" class="form-input" id="altPhone" placeholder="Another contact number">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="email" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">Home Address</label>
+                            <textarea class="form-textarea" id="homeAddress" rows="2"
+                                placeholder="Enter your home address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group" style="margin-top: 20px;">
+                        <input type="checkbox" id="policeReport">
+                        <label class="checkbox-label" for="policeReport">
+                            <strong>I have filed a police report</strong><br>
+                            If yes, please provide the FIR number below
+                        </label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label class="form-label">Police Report/FIR Number (if filed)</label>
+                        <input type="text" class="form-input" id="firNumber" placeholder="e.g., FIR-2024-12345">
+                    </div>
+
+                    <div class="checkbox-group" style="margin-top: 20px;">
+                        <input type="checkbox" id="consent" required>
+                        <label class="checkbox-label" for="consent">
+                            <strong>I confirm this is a genuine report</strong><br>
+                            I understand that false reports may result in legal action
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
+                            ← Back
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            💜 Submit Missing Child Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Section -->
+                <div class="form-section" id="successSection">
+                    <div class="success-section">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">Report Submitted Successfully!</h2>
+                        <p class="success-message">
+                            Your missing child report is now in our system.<br>
+                            Our AI will continuously match against found child reports.
+                        </p>
+                        <div class="case-id">
+                            <div class="case-id-label">Your Case Reference</div>
+                            <div class="case-id-value" id="caseIdDisplay">MC-2024-001248</div>
+                        </div>
+                        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 24px;">
+                            Save this reference number. We'll notify you immediately if we find a match.
+                        </p>
+
+                        <!-- Instant Match Alert (if found) -->
+                        <div class="matching-alert" id="instantMatchAlert">
+                            <h4>🎉 Potential Match Found!</h4>
+                            <p>We found a child report that may match your child's description. Authorities have been
+                                notified.</p>
+                            <button class="btn btn-primary" onclick="viewMatch()">View Match Details</button>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+                            <a href="index.html" class="btn btn-secondary">Return Home</a>
+                            <a href="dashboard-citizen.html" class="btn btn-primary">Track Case</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="data.js"></script>
+    <script>
+        let currentStep = 1;
+        let uploadedFiles = [];
+        let uploadedPhotos = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDistricts();
+            setupFileUpload();
+            setDefaultDate();
+        });
+
+        // Set default date to today
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateMissing').value = today;
+        }
+
+        // Populate districts
+        function populateDistricts() {
+            const select = document.getElementById('district');
+            if (window.appData && window.appData.districts) {
+                window.appData.districts.forEach(d => {
+                    const option = document.createElement('option');
+                    option.value = d.name;
+                    option.textContent = d.name;
+                    select.appendChild(option);
+                });
+            } else {
+                // Fallback districts
+                const districts = ['Hyderabad', 'Rangareddy', 'Medchal', 'Sangareddy', 'Warangal', 'Karimnagar', 'Nizamabad', 'Khammam', 'Nalgonda', 'Mahabubnagar'];
+                districts.forEach(d => {
+                    const option = document.createElement('option');
+                    option.value = d;
+                    option.textContent = d;
+                    select.appendChild(option);
+                });
+            }
+        }
+
+        // File upload handling
+        function setupFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#7c3aed';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = 'var(--gray-300)';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                handleFiles(e.dataTransfer.files);
+            });
+        }
+
+        function handleFiles(files) {
+            const preview = document.getElementById('filePreview');
+            const uploadArea = document.getElementById('uploadArea');
+
+            Array.from(files).slice(0, 5 - uploadedFiles.length).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    uploadedFiles.push(file);
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedPhotos.push(e.target.result);
+
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Child photo">
+                            <button class="file-remove" onclick="removeFile(${uploadedFiles.length - 1})">&times;</button>
+                        `;
+                        preview.appendChild(fileItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            if (uploadedFiles.length > 0) {
+                uploadArea.classList.add('has-files');
+            }
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            uploadedPhotos.splice(index, 1);
+            const preview = document.getElementById('filePreview');
+            preview.innerHTML = '';
+            uploadedPhotos.forEach((src, i) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <img src="${src}" alt="Child photo">
+                    <button class="file-remove" onclick="removeFile(${i})">&times;</button>
+                `;
+                preview.appendChild(fileItem);
+            });
+
+            if (uploadedFiles.length === 0) {
+                document.getElementById('uploadArea').classList.remove('has-files');
+            }
+        }
+
+        // Step navigation
+        function nextStep(step) {
+            if (validateStep(currentStep)) {
+                document.getElementById(`section${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.add('completed');
+
+                currentStep = step;
+                document.getElementById(`section${step}`).classList.add('active');
+                document.getElementById(`step${step}`).classList.add('active');
+
+                if (step > 1) {
+                    document.querySelectorAll('.step-connector')[step - 2].classList.add('active');
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep(step) {
+            document.getElementById(`section${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            currentStep = step;
+            document.getElementById(`section${step}`).classList.add('active');
+            document.getElementById(`step${step}`).classList.add('active');
+        }
+
+        function validateStep(step) {
+            if (step === 1) {
+                const name = document.getElementById('childName').value;
+                const gender = document.getElementById('childGender').value;
+                const desc = document.getElementById('physicalDescription').value;
+
+                if (!name || !gender || !desc) {
+                    alert('Please fill in required fields: Child Name, Gender, and Physical Description');
+                    return false;
+                }
+            }
+
+            if (step === 3) {
+                const location = document.getElementById('lastSeenLocation').value;
+                const district = document.getElementById('district').value;
+                const date = document.getElementById('dateMissing').value;
+
+                if (!location || !district || !date) {
+                    alert('Please fill in required fields: Last Seen Location, District, and Date Missing');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Form submission
+        document.getElementById('missingChildForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!document.getElementById('consent').checked) {
+                alert('Please confirm that this is a genuine report');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Submitting...';
+
+            // Generate case ID
+            const caseNumber = Math.floor(Math.random() * 900000) + 100000;
+            const caseId = `MC-2024-${caseNumber}`;
+
+            // Create missing child report
+            const missingChildReport = {
+                id: caseId,
+                type: 'missing_child',
+                childName: document.getElementById('childName').value,
+                childAge: document.getElementById('childAge').value,
+                childGender: document.getElementById('childGender').value,
+                childHeight: document.getElementById('childHeight').value,
+                physicalDescription: document.getElementById('physicalDescription').value,
+                distinguishingMarks: document.getElementById('distinguishingMarks').value,
+                photos: uploadedPhotos,
+                lastSeenLocation: document.getElementById('lastSeenLocation').value,
+                district: document.getElementById('district').value,
+                dateMissing: document.getElementById('dateMissing').value,
+                timeMissing: document.getElementById('timeMissing').value,
+                lastSeenWearing: document.getElementById('lastSeenWearing').value,
+                additionalDetails: document.getElementById('additionalDetails').value,
+                parentName: document.getElementById('parentName').value,
+                relationship: document.getElementById('relationship').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                altPhone: document.getElementById('altPhone').value,
+                email: document.getElementById('email').value,
+                homeAddress: document.getElementById('homeAddress').value,
+                policeReport: document.getElementById('policeReport').checked,
+                firNumber: document.getElementById('firNumber').value,
+                reportedAt: new Date().toISOString(),
+                status: 'searching',
+                notifyOnMatch: true
+            };
+
+            // Save to localStorage
+            const missingChildren = JSON.parse(localStorage.getItem('balaraksha_missing_children') || '[]');
+            missingChildren.push(missingChildReport);
+            localStorage.setItem('balaraksha_missing_children', JSON.stringify(missingChildren));
+
+            // Check for instant matches with found children
+            const foundMatches = await checkForMatches(missingChildReport);
+
+            // Show success
+            document.getElementById('section4').classList.remove('active');
+            document.getElementById('successSection').classList.add('active');
+            document.getElementById('caseIdDisplay').textContent = caseId;
+
+            // If matches found, show alert
+            if (foundMatches.length > 0) {
+                document.getElementById('instantMatchAlert').classList.add('show');
+
+                // Store match for viewing
+                localStorage.setItem('pending_match', JSON.stringify({
+                    missingChild: missingChildReport,
+                    matches: foundMatches
+                }));
+
+                // Notify authorities
+                notifyAuthorities(missingChildReport, foundMatches);
+            }
+
+            // Hide steps indicator for success
+            document.querySelector('.steps-indicator').style.opacity = '0';
+        });
+
+        // Check for matches against found children reports
+        async function checkForMatches(missingChild) {
+            const foundChildren = JSON.parse(localStorage.getItem('balaraksha_cases') || '[]');
+            const matches = [];
+
+            foundChildren.forEach(foundChild => {
+                const matchScore = calculateMatchScore(missingChild, foundChild);
+
+                if (matchScore >= 50) {
+                    matches.push({
+                        foundChild,
+                        matchScore,
+                        matchDetails: getMatchDetails(missingChild, foundChild)
+                    });
+                }
+            });
+
+            // Sort by match score
+            matches.sort((a, b) => b.matchScore - a.matchScore);
+
+            return matches;
+        }
+
+        // Calculate match score between missing and found child
+        function calculateMatchScore(missing, found) {
+            let score = 0;
+            let totalWeight = 0;
+
+            // Age match (weight: 25)
+            if (missing.childAge && found.age) {
+                totalWeight += 25;
+                if (missing.childAge === found.age) {
+                    score += 25;
+                } else if (ageOverlaps(missing.childAge, found.age)) {
+                    score += 15;
+                }
+            }
+
+            // Gender match (weight: 30)
+            if (missing.childGender && found.gender) {
+                totalWeight += 30;
+                if (missing.childGender === found.gender) {
+                    score += 30;
+                }
+            }
+
+            // District proximity (weight: 20)
+            if (missing.district && found.district) {
+                totalWeight += 20;
+                if (missing.district === found.district) {
+                    score += 20;
+                } else if (isNearbyDistrict(missing.district, found.district)) {
+                    score += 10;
+                }
+            }
+
+            // Description similarity (weight: 25) - Simple keyword matching
+            if (missing.physicalDescription && found.description) {
+                totalWeight += 25;
+                const similarity = calculateTextSimilarity(missing.physicalDescription, found.description);
+                score += Math.round(25 * similarity);
+            }
+
+            // Normalize score
+            return totalWeight > 0 ? Math.round((score / totalWeight) * 100) : 0;
+        }
+
+        function ageOverlaps(age1, age2) {
+            const ranges = {
+                '0-2': [0, 2],
+                '3-5': [3, 5],
+                '6-10': [6, 10],
+                '11-14': [11, 14],
+                '15-18': [15, 18]
+            };
+
+            const r1 = ranges[age1];
+            const r2 = ranges[age2];
+
+            if (!r1 || !r2) return false;
+
+            return !(r1[1] < r2[0] - 1 || r2[1] < r1[0] - 1);
+        }
+
+        function isNearbyDistrict(d1, d2) {
+            const nearby = {
+                'Hyderabad': ['Rangareddy', 'Medchal', 'Sangareddy'],
+                'Rangareddy': ['Hyderabad', 'Medchal', 'Mahbubnagar'],
+                'Warangal': ['Karimnagar', 'Khammam', 'Nalgonda'],
+                'Karimnagar': ['Warangal', 'Nizamabad', 'Adilabad']
+            };
+
+            return nearby[d1]?.includes(d2) || nearby[d2]?.includes(d1);
+        }
+
+        function calculateTextSimilarity(text1, text2) {
+            const words1 = text1.toLowerCase().split(/\s+/);
+            const words2 = text2.toLowerCase().split(/\s+/);
+
+            let matches = 0;
+            words1.forEach(word => {
+                if (word.length > 2 && words2.some(w => w.includes(word) || word.includes(w))) {
+                    matches++;
+                }
+            });
+
+            return matches / Math.max(words1.length, 1);
+        }
+
+        function getMatchDetails(missing, found) {
+            const details = [];
+
+            if (missing.childGender === found.gender) {
+                details.push('Same gender');
+            }
+            if (missing.childAge === found.age) {
+                details.push('Same age group');
+            }
+            if (missing.district === found.district) {
+                details.push('Same district');
+            }
+
+            return details;
+        }
+
+        // Notify authorities about match
+        function notifyAuthorities(missingChild, matches) {
+            // Create notification for authorities
+            const notifications = JSON.parse(localStorage.getItem('balaraksha_notifications') || '[]');
+
+            matches.forEach(match => {
+                notifications.push({
+                    id: `NOTIF-${Date.now()}`,
+                    type: 'match_found',
+                    priority: 'high',
+                    missingChildId: missingChild.id,
+                    foundChildId: match.foundChild.id,
+                    matchScore: match.matchScore,
+                    message: `Potential match found! Missing child "${missingChild.childName}" may match found child case ${match.foundChild.id}`,
+                    parentPhone: missingChild.phoneNumber,
+                    parentName: missingChild.parentName,
+                    createdAt: new Date().toISOString(),
+                    status: 'unread',
+                    notifyParent: true,
+                    notifyAuthority: true,
+                    notifyShelter: true
+                });
+            });
+
+            localStorage.setItem('balaraksha_notifications', JSON.stringify(notifications));
+
+            // Also update shelter dashboard pending matches
+            const shelterMatches = JSON.parse(localStorage.getItem('balaraksha_shelter_matches') || '[]');
+            matches.forEach(match => {
+                shelterMatches.push({
+                    id: `MATCH-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                    missingChild,
+                    foundChild: match.foundChild,
+                    matchScore: match.matchScore,
+                    confidence: match.matchScore >= 80 ? 'High' : match.matchScore >= 60 ? 'Medium' : 'Low',
+                    createdAt: new Date().toISOString(),
+                    status: 'pending_review'
+                });
+            });
+            localStorage.setItem('balaraksha_shelter_matches', JSON.stringify(shelterMatches));
+        }
+
+        function viewMatch() {
+            window.location.href = 'dashboard-citizen.html?showMatch=true';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Dashboard | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .dash-header {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .dash-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dash-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-700);
+        }
+
+        .dash-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dash-nav-item {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: all 0.2s ease;
+        }
+
+        .dash-nav-item:hover,
+        .dash-nav-item.active {
+            background: var(--primary-50);
+            color: var(--primary-700);
+        }
+
+        .dash-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .user-info span {
+            display: block;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .dash-main {
+            padding: 32px 0;
+        }
+
+        .dash-welcome {
+            margin-bottom: 32px;
+        }
+
+        .dash-welcome h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .dash-welcome p {
+            color: var(--gray-500);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quick-action {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            border: 2px solid var(--gray-100);
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quick-action:hover {
+            border-color: var(--primary-300);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .quick-action.primary {
+            background: linear-gradient(135deg, var(--danger-500), var(--danger-600));
+            border-color: transparent;
+            color: white;
+        }
+
+        .quick-action-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .quick-action h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .quick-action p {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .dash-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        .dash-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dash-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .dash-card-body {
+            padding: 24px;
+        }
+
+        .case-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .case-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .case-item:hover {
+            background: var(--primary-50);
+        }
+
+        .case-status-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .case-status-icon.reported {
+            background: var(--warning-50);
+        }
+
+        .case-status-icon.rescued {
+            background: var(--success-50);
+        }
+
+        .case-status-icon.in-progress {
+            background: var(--primary-50);
+        }
+
+        .case-info {
+            flex: 1;
+        }
+
+        .case-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+
+        .case-location {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .case-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .case-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-reported {
+            background: var(--warning-100);
+            color: var(--warning-700);
+        }
+
+        .badge-rescued {
+            background: var(--success-100);
+            color: var(--success-700);
+        }
+
+        .badge-in-progress {
+            background: var(--primary-100);
+            color: var(--primary-700);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state h4 {
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .nearby-shelters {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .shelter-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .shelter-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .shelter-info {
+            flex: 1;
+        }
+
+        .shelter-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .shelter-distance {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .shelter-beds {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success-600);
+        }
+
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-mini {
+            background: linear-gradient(135deg, var(--primary-50), var(--gray-50));
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-mini-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-700);
+        }
+
+        .stat-mini-label {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .help-card {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-top: 24px;
+        }
+
+        .help-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .help-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .help-btn {
+            background: white;
+            color: var(--primary-700);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid var(--gray-300);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: var(--gray-100);
+        }
+
+        @media (max-width: 992px) {
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard">
+    <!-- Header -->
+    <header class="dash-header">
+        <div class="container dash-header-content">
+            <a href="index.html" class="dash-logo">
+                🏠 బాలరక్ష
+            </a>
+            <nav class="dash-nav">
+                <a href="#" class="dash-nav-item active">Dashboard</a>
+                <a href="#cases" class="dash-nav-item">My Reports</a>
+                <a href="#shelters" class="dash-nav-item">Shelters</a>
+                <a href="#volunteer" class="dash-nav-item">Volunteer</a>
+            </nav>
+            <div class="dash-user">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Guest User</span>
+                    <span class="user-role">Citizen</span>
+                </div>
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dash-main">
+        <div class="container">
+            <!-- Welcome -->
+            <div class="dash-welcome">
+                <h1>Welcome back! 👋</h1>
+                <p>Thank you for being part of our child protection community.</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <a href="new-case.html" class="quick-action primary">
+                    <div class="quick-action-icon">🚨</div>
+                    <h3>Report a Child</h3>
+                    <p>Found a child in need? Report now</p>
+                </a>
+                <div class="quick-action" onclick="alert('Dialing 1098...')">
+                    <div class="quick-action-icon">📞</div>
+                    <h3>Call Childline</h3>
+                    <p>1098 - 24/7 Helpline</p>
+                </div>
+                <a href="#shelters" class="quick-action">
+                    <div class="quick-action-icon">📍</div>
+                    <h3>Find Shelters</h3>
+                    <p>Locate nearby verified shelters</p>
+                </a>
+                <a href="#volunteer" class="quick-action">
+                    <div class="quick-action-icon">🤝</div>
+                    <h3>Volunteer</h3>
+                    <p>Join our volunteer network</p>
+                </a>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="dash-grid">
+                <!-- Cases Column -->
+                <div>
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <span class="dash-card-title">📋 Your Reports</span>
+                            <a href="new-case.html"
+                                style="color: var(--primary-600); font-size: 14px; font-weight: 500;">+ New Report</a>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="case-list" id="caseList">
+                                <!-- Cases will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div>
+                    <!-- Stats -->
+                    <div class="stats-mini">
+                        <div class="stat-mini">
+                            <div class="stat-mini-number" id="totalReports">0</div>
+                            <div class="stat-mini-label">Reports Made</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-number" id="resolvedCases">0</div>
+                            <div class="stat-mini-label">Children Helped</div>
+                        </div>
+                    </div>
+
+                    <!-- Nearby Shelters -->
+                    <div class="dash-card" id="shelters">
+                        <div class="dash-card-header">
+                            <span class="dash-card-title">🏠 Nearby Shelters</span>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="nearby-shelters" id="nearbyShelters">
+                                <!-- Shelters will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Help Card -->
+                    <div class="help-card">
+                        <h4>Need Help?</h4>
+                        <p>Our support team is available 24/7 to assist you with any queries.</p>
+                        <button class="help-btn">Contact Support</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadCases();
+            loadNearbyShelters();
+        });
+
+        // Check authentication
+        function checkAuth() {
+            const session = localStorage.getItem('balaraksha_session');
+            if (session) {
+                try {
+                    const parsed = JSON.parse(session);
+                    document.getElementById('userName').textContent = parsed.user?.name || 'User';
+                    document.getElementById('userAvatar').textContent = parsed.user?.avatar || '👤';
+                } catch (e) {
+                    console.error('Session parse error:', e);
+                }
+            }
+        }
+
+        // Load user's cases
+        function loadCases() {
+            const cases = JSON.parse(localStorage.getItem('balaraksha_cases') || '[]');
+            const caseList = document.getElementById('caseList');
+
+            // Update stats
+            document.getElementById('totalReports').textContent = cases.length;
+            document.getElementById('resolvedCases').textContent = cases.filter(c =>
+                c.status === 'rescued' || c.status === 'reunified'
+            ).length;
+
+            if (cases.length === 0) {
+                caseList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h4>No reports yet</h4>
+                        <p>When you report a child in need, it will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            caseList.innerHTML = cases.map(c => {
+                const statusIcons = {
+                    reported: '📋',
+                    verified: '✓',
+                    dispatched: '🚗',
+                    rescued: '✅',
+                    reunified: '👨‍👩‍👧',
+                    shelter_assigned: '🏠'
+                };
+                const statusClasses = {
+                    reported: 'reported',
+                    verified: 'in-progress',
+                    dispatched: 'in-progress',
+                    rescued: 'rescued',
+                    reunified: 'rescued',
+                    shelter_assigned: 'in-progress'
+                };
+                const statusLabels = {
+                    reported: 'Reported',
+                    verified: 'Verified',
+                    dispatched: 'Team Dispatched',
+                    rescued: 'Rescued',
+                    reunified: 'Reunified',
+                    shelter_assigned: 'Shelter Assigned'
+                };
+
+                const date = new Date(c.reportedAt);
+                const timeAgo = getTimeAgo(date);
+
+                // Get shelter assignment info
+                let shelterInfo = '';
+                if (c.assignedShelter && window.appData) {
+                    const shelter = window.appData.shelters?.find(s => s.id === c.assignedShelter);
+                    if (shelter) {
+                        shelterInfo = `<div style="font-size: 12px; color: var(--success-600); margin-top: 4px;">✅ Assigned to: ${shelter.name}</div>`;
+                    }
+                } else if (c.nearbyShelters && c.nearbyShelters.length > 0) {
+                    const pendingCount = c.nearbyShelters.filter(s => s.status === 'pending').length;
+                    if (pendingCount > 0) {
+                        shelterInfo = `<div style="font-size: 12px; color: var(--warning-600); margin-top: 4px;">⏳ Waiting for shelter response (${pendingCount} notified)</div>`;
+                    }
+                }
+
+                return `
+                    <div class="case-item">
+                        <div class="case-status-icon ${statusClasses[c.status] || 'reported'}">
+                            ${statusIcons[c.status] || '📋'}
+                        </div>
+                        <div class="case-info">
+                            <div class="case-id">${c.id}</div>
+                            <div class="case-location">📍 ${c.address}, ${c.district}</div>
+                            <div class="case-meta">
+                                <span>${timeAgo}</span>
+                                <span>${c.urgency?.toUpperCase() || 'STANDARD'} Priority</span>
+                            </div>
+                            ${shelterInfo}
+                        </div>
+                        <span class="case-badge badge-${statusClasses[c.status] || 'reported'}">
+                            ${statusLabels[c.status] || 'Reported'}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load nearby shelters
+        function loadNearbyShelters() {
+            const container = document.getElementById('nearbyShelters');
+
+            if (window.appData && window.appData.shelters) {
+                const shelters = window.appData.shelters.slice(0, 4);
+
+                container.innerHTML = shelters.map(s => {
+                    const available = s.capacity - s.currentOccupancy;
+                    return `
+                        <div class="shelter-item">
+                            <div class="shelter-icon">🏠</div>
+                            <div class="shelter-info">
+                                <div class="shelter-name">${s.name}</div>
+                                <div class="shelter-distance">📍 ${s.district}</div>
+                            </div>
+                            <span class="shelter-beds">${available} beds</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Time ago helper
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            const intervals = [
+                { label: 'year', seconds: 31536000 },
+                { label: 'month', seconds: 2592000 },
+                { label: 'week', seconds: 604800 },
+                { label: 'day', seconds: 86400 },
+                { label: 'hour', seconds: 3600 },
+                { label: 'minute', seconds: 60 }
+            ];
+
+            for (const interval of intervals) {
+                const count = Math.floor(seconds / interval.seconds);
+                if (count >= 1) {
+                    return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+                }
+            }
+            return 'Just now';
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('balaraksha_session');
+            window.location.href = 'index.html';
+        }
+
+        // Premium Page Load Animations
+        window.addEventListener('load', () => {
+            // Header - slide down
+            const header = document.querySelector('.dash-header');
+            if (header) {
+                header.style.opacity = '0';
+                header.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    header.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    header.style.opacity = '1';
+                    header.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // Welcome section - fade in
+            const welcome = document.querySelector('.dash-welcome');
+            if (welcome) {
+                welcome.style.opacity = '0';
+                welcome.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    welcome.style.transition = 'all 0.5s ease';
+                    welcome.style.opacity = '1';
+                    welcome.style.transform = 'translateY(0)';
+                }, 200);
+            }
+
+            // Quick actions - pop in with stagger
+            const quickActions = document.querySelectorAll('.quick-action');
+            quickActions.forEach((action, i) => {
+                action.style.opacity = '0';
+                action.style.transform = 'translateY(20px) scale(0.95)';
+                setTimeout(() => {
+                    action.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    action.style.opacity = '1';
+                    action.style.transform = 'translateY(0) scale(1)';
+                }, 300 + (i * 80));
+            });
+
+            // Main card - slide from left
+            const mainCard = document.querySelector('.dash-grid > div:first-child .dash-card');
+            if (mainCard) {
+                mainCard.style.opacity = '0';
+                mainCard.style.transform = 'translateX(-30px)';
+                setTimeout(() => {
+                    mainCard.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    mainCard.style.opacity = '1';
+                    mainCard.style.transform = 'translateX(0)';
+                }, 550);
+            }
+
+            // Sidebar elements - slide from right with stagger
+            const statsMini = document.querySelector('.stats-mini');
+            if (statsMini) {
+                statsMini.style.opacity = '0';
+                statsMini.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    statsMini.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    statsMini.style.opacity = '1';
+                    statsMini.style.transform = 'translateX(0)';
+                }, 500);
+            }
+
+            const shelterCard = document.querySelector('#shelters');
+            if (shelterCard) {
+                shelterCard.style.opacity = '0';
+                shelterCard.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    shelterCard.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    shelterCard.style.opacity = '1';
+                    shelterCard.style.transform = 'translateX(0)';
+                }, 600);
+            }
+
+            const helpCard = document.querySelector('.help-card');
+            if (helpCard) {
+                helpCard.style.opacity = '0';
+                helpCard.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    helpCard.style.transition = 'all 0.5s ease';
+                    helpCard.style.opacity = '1';
+                    helpCard.style.transform = 'translateY(0)';
+                }, 750);
+            }
+
+            // Case items - stagger
+            const caseItems = document.querySelectorAll('.case-item');
+            caseItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 700 + (i * 80));
+            });
+
+            // Shelter items - stagger
+            const shelterItems = document.querySelectorAll('.shelter-item');
+            shelterItems.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(15px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 750 + (i * 60));
+            });
+        });
+    </script>
+</body>
+
+</html>

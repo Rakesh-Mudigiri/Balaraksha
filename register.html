@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Volunteer | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .volunteer-page {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .volunteer-header {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .volunteer-header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .volunteer-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .benefits-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 32px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            padding: 24px;
+        }
+
+        .form-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #065f46;
+        }
+
+        .form-body {
+            padding: 32px;
+        }
+
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            padding: 10px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: #10b981;
+        }
+
+        .skill-tag.selected {
+            background: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .day-btn {
+            padding: 12px 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .day-btn:hover {
+            border-color: #10b981;
+        }
+
+        .day-btn.selected {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .day-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .time-slots {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .time-slot {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-slot:hover {
+            border-color: #10b981;
+        }
+
+        .time-slot.selected {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .time-slot-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .time-slot-hours {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: #10b981;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            flex: 1;
+        }
+
+        .checkbox-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .checkbox-desc {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+        }
+
+        .info-card {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card h4 {
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .info-card p {
+            color: #3b82f6;
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .success-section {
+            text-align: center;
+            padding: 60px;
+            display: none;
+        }
+
+        .success-section.active {
+            display: block;
+        }
+
+        .form-content {
+            display: block;
+        }
+
+        .form-content.hidden {
+            display: none;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        .volunteer-id {
+            background: #d1fae5;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            color: #065f46;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-bar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .availability-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .time-slots {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="volunteer-page">
+    <!-- Header -->
+    <header class="volunteer-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>🤝 Become a Volunteer</h1>
+            <p>Join our network of heroes protecting children across Telangana.</p>
+            <div class="benefits-bar">
+                <div class="benefit-item">
+                    <span>📜</span> Certificate of Appreciation
+                </div>
+                <div class="benefit-item">
+                    <span>🎓</span> Free Training
+                </div>
+                <div class="benefit-item">
+                    <span>🏅</span> Recognition Awards
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h2>📋 Volunteer Registration Form</h2>
+            </div>
+            <div class="form-body">
+                <div class="form-content" id="formContent">
+                    <form id="volunteerForm">
+                        <!-- Personal Info -->
+                        <div class="form-section">
+                            <h3 class="section-title">👤 Personal Information</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" class="form-input" name="name" placeholder="Your full name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Age *</label>
+                                    <input type="number" class="form-input" name="age" placeholder="18+" min="18"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-input" name="phone" placeholder="+91 98765 43210"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" class="form-input" name="email" placeholder="your@email.com"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">District *</label>
+                                    <select class="form-select" name="district" id="districtSelect" required>
+                                        <option value="">Select District</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Occupation</label>
+                                    <input type="text" class="form-input" name="occupation"
+                                        placeholder="e.g., Teacher, Student, IT Professional">
+                                </div>
+                                <div class="form-group full">
+                                    <label class="form-label">Address</label>
+                                    <textarea class="form-textarea" name="address"
+                                        placeholder="Your residential address" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="form-section">
+                            <h3 class="section-title">💪 Skills & Expertise</h3>
+                            <p style="font-size: 14px; color: #6b7280; margin-bottom: 16px;">Select all that apply:</p>
+                            <div class="skill-tags">
+                                <span class="skill-tag" data-skill="driving">🚗 Driving</span>
+                                <span class="skill-tag" data-skill="transport">🚐 Vehicle Owner</span>
+                                <span class="skill-tag" data-skill="counseling">💬 Counseling</span>
+                                <span class="skill-tag" data-skill="medical">🏥 Medical/First Aid</span>
+                                <span class="skill-tag" data-skill="legal">⚖️ Legal Knowledge</span>
+                                <span class="skill-tag" data-skill="teaching">📚 Teaching</span>
+                                <span class="skill-tag" data-skill="documentation">📋 Documentation</span>
+                                <span class="skill-tag" data-skill="languages">🗣️ Telugu/Hindi</span>
+                                <span class="skill-tag" data-skill="photography">📸 Photography</span>
+                                <span class="skill-tag" data-skill="social-work">🤝 Social Work</span>
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <div class="form-section">
+                            <h3 class="section-title">📅 Availability</h3>
+                            <p style="font-size: 14px; color: #6b7280; margin-bottom: 16px;">Select days you're
+                                available:</p>
+                            <div class="availability-grid">
+                                <div class="day-btn" data-day="mon">
+                                    <div class="day-name">Mon</div>
+                                </div>
+                                <div class="day-btn" data-day="tue">
+                                    <div class="day-name">Tue</div>
+                                </div>
+                                <div class="day-btn" data-day="wed">
+                                    <div class="day-name">Wed</div>
+                                </div>
+                                <div class="day-btn" data-day="thu">
+                                    <div class="day-name">Thu</div>
+                                </div>
+                                <div class="day-btn" data-day="fri">
+                                    <div class="day-name">Fri</div>
+                                </div>
+                                <div class="day-btn selected" data-day="sat">
+                                    <div class="day-name">Sat</div>
+                                </div>
+                                <div class="day-btn selected" data-day="sun">
+                                    <div class="day-name">Sun</div>
+                                </div>
+                            </div>
+                            <div class="time-slots">
+                                <div class="time-slot selected" data-slot="morning">
+                                    <div class="time-slot-label">🌅 Morning</div>
+                                    <div class="time-slot-hours">6 AM - 12 PM</div>
+                                </div>
+                                <div class="time-slot selected" data-slot="afternoon">
+                                    <div class="time-slot-label">☀️ Afternoon</div>
+                                    <div class="time-slot-hours">12 PM - 6 PM</div>
+                                </div>
+                                <div class="time-slot" data-slot="evening">
+                                    <div class="time-slot-label">🌙 Evening</div>
+                                    <div class="time-slot-hours">6 PM - 10 PM</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Background Verification -->
+                        <div class="form-section">
+                            <h3 class="section-title">🔒 Background Verification</h3>
+                            <div class="info-card">
+                                <h4>ℹ️ Why do we need this?</h4>
+                                <p>For child safety, all volunteers undergo background verification as per government
+                                    guidelines. Your information is kept confidential.</p>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Aadhaar Number *</label>
+                                    <input type="text" class="form-input" name="aadhaar" placeholder="XXXX XXXX XXXX"
+                                        maxlength="14" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">ID Proof Type</label>
+                                    <select class="form-select" name="idType">
+                                        <option value="aadhaar">Aadhaar Card</option>
+                                        <option value="pan">PAN Card</option>
+                                        <option value="voter">Voter ID</option>
+                                        <option value="driving">Driving License</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Agreements -->
+                        <div class="form-section">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="training" checked>
+                                    <label class="checkbox-label" for="training">
+                                        <div class="checkbox-title">Willing to attend training</div>
+                                        <div class="checkbox-desc">I agree to complete the mandatory volunteer training
+                                            program</div>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="guidelines" required>
+                                    <label class="checkbox-label" for="guidelines">
+                                        <div class="checkbox-title">Follow child safety guidelines *</div>
+                                        <div class="checkbox-desc">I will adhere to all child protection policies and
+                                            guidelines</div>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="terms" required>
+                                    <label class="checkbox-label" for="terms">
+                                        <div class="checkbox-title">Accept Terms & Conditions *</div>
+                                        <div class="checkbox-desc">I agree to the volunteer code of conduct and privacy
+                                            policy</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            🤝 Submit Application
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Success -->
+                <div class="success-section" id="successSection">
+                    <div class="success-icon">🎉</div>
+                    <h3 class="success-title">Application Submitted!</h3>
+                    <p class="success-message">Thank you for joining our volunteer network. Our team will verify your
+                        details and contact you within 2-3 business days.</p>
+                    <div class="volunteer-id" id="volunteerId">VOL-2024-XXXX</div>
+                    <p style="font-size: 14px; color: #6b7280; margin-bottom: 24px;">
+                        Save this ID for your records. You'll receive training schedule via SMS.
+                    </p>
+                    <a href="index.html" class="btn-submit"
+                        style="max-width: 200px; margin: 0 auto; text-decoration: none;">
+                        Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Populate districts
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.appData && window.appData.districts) {
+                const select = document.getElementById('districtSelect');
+                window.appData.districts.forEach(d => {
+                    const option = document.createElement('option');
+                    option.value = d.name;
+                    option.textContent = d.name;
+                    select.appendChild(option);
+                });
+            }
+        });
+
+        // Skill selection
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('click', () => tag.classList.toggle('selected'));
+        });
+
+        // Day selection
+        document.querySelectorAll('.day-btn').forEach(btn => {
+            btn.addEventListener('click', () => btn.classList.toggle('selected'));
+        });
+
+        // Time slot selection
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('click', () => slot.classList.toggle('selected'));
+        });
+
+        // Form submission
+        document.getElementById('volunteerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('.btn-submit');
+            btn.disabled = true;
+            btn.innerHTML = 'Submitting...';
+
+            await new Promise(r => setTimeout(r, 2000));
+
+            // Generate volunteer ID
+            const volId = 'VOL-2024-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+            document.getElementById('volunteerId').textContent = volId;
+
+            // Save volunteer
+            const volunteers = JSON.parse(localStorage.getItem('balaraksha_volunteers') || '[]');
+            const formData = new FormData(e.target);
+            volunteers.push({
+                id: volId,
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                district: formData.get('district'),
+                skills: [...document.querySelectorAll('.skill-tag.selected')].map(t => t.dataset.skill),
+                status: 'pending_verification',
+                registeredAt: new Date().toISOString()
+            });
+            localStorage.setItem('balaraksha_volunteers', JSON.stringify(volunteers));
+
+            // Show success
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('successSection').classList.add('active');
+        });
+    </script>
+</body>
+
+</html>

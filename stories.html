@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Stories | బాలరక్ష</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .stories-page {
+            min-height: 100vh;
+            background: var(--gray-50);
+        }
+
+        .stories-header {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .stories-header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .stories-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .impact-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 40px;
+        }
+
+        .impact-item {
+            text-align: center;
+        }
+
+        .impact-number {
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .impact-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stories-container {
+            max-width: 1200px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .featured-story {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 40px;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, #e9d5ff, #c4b5fd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            min-height: 400px;
+        }
+
+        .featured-content {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .story-badge {
+            display: inline-block;
+            background: #f3e8ff;
+            color: #7c3aed;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .story-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .story-excerpt {
+            font-size: 16px;
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .story-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .story-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .story-card-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+        }
+
+        .story-card-body {
+            padding: 24px;
+        }
+
+        .story-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .story-card-text {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .story-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .story-outcome {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .outcome-reunified {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .outcome-adopted {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .outcome-educated {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .outcome-rehabilitated {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        .story-date {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin: 60px 0 32px;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .testimonial {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial-quote {
+            font-size: 16px;
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .author-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .author-role {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-white {
+            background: white;
+            color: #7c3aed;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 992px) {
+            .featured-story {
+                grid-template-columns: 1fr;
+            }
+
+            .stories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-numbers {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="stories-page">
+    <!-- Header -->
+    <header class="stories-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>💜 Lives Transformed</h1>
+            <p>Real stories of hope, rescue, and new beginnings. Every child deserves a chance.</p>
+            <div class="impact-numbers">
+                <div class="impact-item">
+                    <div class="impact-number">1,247</div>
+                    <div class="impact-label">Children Rescued</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">1,109</div>
+                    <div class="impact-label">Families Reunited</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">89%</div>
+                    <div class="impact-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="stories-container">
+        <!-- Featured Story -->
+        <div class="featured-story">
+            <div class="featured-image" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+                👨‍👩‍👧
+            </div>
+            <div class="featured-content">
+                <span class="story-badge">⭐ Featured Story</span>
+                <h2 class="story-title">From the Streets to a Loving Home: Lakshmi's Journey</h2>
+                <p class="story-excerpt">
+                    Found alone at Secunderabad railway station at age 4, Lakshmi's life changed when a citizen reported
+                    her through Balaraksha. Within hours, she was rescued and placed in a safe shelter. After 3 months
+                    of investigation, her family was located in Karimnagar. Today, she's back home, attending school,
+                    and dreaming of becoming a teacher.
+                </p>
+                <div class="story-meta">
+                    <span>📍 Secunderabad → Karimnagar</span>
+                    <span>📅 December 2024</span>
+                    <span>✅ Reunified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stories Grid -->
+        <div class="stories-grid">
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">
+                    👦
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Ravi's Education Dream Came True</h3>
+                    <p class="story-card-text">
+                        Orphaned at 8, Ravi was begging near Charminar. Now he's in 10th grade at a government school,
+                        supported by our shelter network.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-educated">📚 In School</span>
+                        <span class="story-date">Nov 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8);">
+                    👧
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Priya Found Her Forever Family</h3>
+                    <p class="story-card-text">
+                        After 2 years in care, 6-year-old Priya was legally adopted by a loving family from Warangal.
+                        She now has two siblings.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-adopted">🏠 Adopted</span>
+                        <span class="story-date">Oct 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+                    👶
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Baby Rescued, Mother Found</h3>
+                    <p class="story-card-text">
+                        Abandoned newborn found near a hospital was traced back to a distressed mother. With counseling,
+                        both are now thriving.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-reunified">👪 Reunified</span>
+                        <span class="story-date">Sep 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">
+                    🧑
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Kumar Learned a Skill</h3>
+                    <p class="story-card-text">
+                        At 16, Kumar was at risk. After joining our vocational program, he's now trained as an
+                        electrician with a steady job.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-rehabilitated">💼 Employed</span>
+                        <span class="story-date">Aug 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe);">
+                    👧
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Sisters Reunited After 2 Years</h3>
+                    <p class="story-card-text">
+                        Separated during migration, two sisters found each other through our database. They're now
+                        together in a shelter in Hyderabad.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-reunified">👪 Reunified</span>
+                        <span class="story-date">Jul 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-card-image" style="background: linear-gradient(135deg, #fecaca, #fca5a5);">
+                    👦
+                </div>
+                <div class="story-card-body">
+                    <h3 class="story-card-title">Medical Miracle: Anand's Recovery</h3>
+                    <p class="story-card-text">
+                        Rescued malnourished, Anand received critical medical care. Six months later, he's healthy,
+                        active, and loves cricket.
+                    </p>
+                    <div class="story-card-footer">
+                        <span class="story-outcome outcome-rehabilitated">🏥 Recovered</span>
+                        <span class="story-date">Jun 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <h2 class="section-title">💬 Words from Our Community</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p class="testimonial-quote">
+                    "I saw a child alone at the bus stand and didn't know what to do. Balaraksha made it so easy to
+                    report. Within an hour, a team arrived. It felt amazing to help."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">👤</div>
+                    <div>
+                        <div class="author-name">Ramesh K.</div>
+                        <div class="author-role">Citizen Reporter, Hyderabad</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-quote">
+                    "As a shelter coordinator, this platform has transformed how we work. We get real-time updates, and
+                    coordination with DCPU is seamless."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">🏠</div>
+                    <div>
+                        <div class="author-name">Shishu Vihar Team</div>
+                        <div class="author-role">Partner Shelter, Hyderabad</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>Be Part of the Next Success Story</h2>
+            <p>Whether you donate, volunteer, or simply report a child in need, you can make a difference.</p>
+            <div class="cta-buttons">
+                <a href="donate.html" class="btn btn-white">💝 Donate Now</a>
+                <a href="register.html" class="btn btn-outline">🤝 Become a Volunteer</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Load Animations
+        window.addEventListener('load', () => {
+            // Header - slide down
+            const header = document.querySelector('.stories-header');
+            if (header) {
+                header.style.opacity = '0';
+                header.style.transform = 'translateY(-40px)';
+                setTimeout(() => {
+                    header.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    header.style.opacity = '1';
+                    header.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // Impact numbers - pop in with stagger
+            const impacts = document.querySelectorAll('.impact-item');
+            impacts.forEach((item, i) => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                }, 300 + (i * 120));
+            });
+
+            // Featured story - slide from left
+            const featured = document.querySelector('.featured-story');
+            if (featured) {
+                featured.style.opacity = '0';
+                featured.style.transform = 'translateX(-50px)';
+                setTimeout(() => {
+                    featured.style.transition = 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    featured.style.opacity = '1';
+                    featured.style.transform = 'translateX(0)';
+                }, 500);
+            }
+
+            // Story cards - slide up with stagger
+            const cards = document.querySelectorAll('.story-card');
+            cards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 700 + (i * 100));
+            });
+
+            // Testimonials - slide from right with stagger
+            const testimonials = document.querySelectorAll('.testimonial');
+            testimonials.forEach((t, i) => {
+                t.style.opacity = '0';
+                t.style.transform = 'translateX(40px)';
+                setTimeout(() => {
+                    t.style.transition = 'all 0.5s ease';
+                    t.style.opacity = '1';
+                    t.style.transform = 'translateX(0)';
+                }, 1200 + (i * 150));
+            });
+
+            // CTA section - slide up
+            const cta = document.querySelector('.cta-section');
+            if (cta) {
+                cta.style.opacity = '0';
+                cta.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    cta.style.transition = 'all 0.6s ease';
+                    cta.style.opacity = '1';
+                    cta.style.transform = 'translateY(0)';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+
+</html>
